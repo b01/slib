@@ -5,3 +5,4 @@ composer.bat
 private.ini
 private/
 vendor
+composer.phar
