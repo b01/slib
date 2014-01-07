@@ -1,4 +1,6 @@
-<?php namespace Kshabazz\Slib;
+<?php
+// Once PHP RFC: Importing namespaced functions is implemented with the installed version, uncomment the namespace line.
+//namespace Kshabazz\Slib;
 /**
  * Tools to help simplify repetitive task.
  * Diablo 3 Assistant License is under The MIT License (MIT)
