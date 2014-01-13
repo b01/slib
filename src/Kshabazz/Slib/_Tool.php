@@ -1,6 +1,4 @@
-<?php
-// Once PHP RFC: Importing namespaced functions is implemented with the installed version, uncomment the namespace line.
-//namespace Kshabazz\Slib;
+<?php namespace Kshabazz\Slib;
 /**
  * Tools to help simplify repetitive task.
  * Diablo 3 Assistant License is under The MIT License (MIT)
@@ -51,20 +49,28 @@ function camelCase( $pString, $upperCaseFirst = FALSE )
 		$requirementsMet = TRUE;
 		$phpVersion = phpversion();
 		$version = explode( '.', phpversion() );
+		// fix minor version with tags, ex: 5.6.0-dev
+		$version[2] = str_replace( '-dev', '', $version[2] );
 		// Check the major version.
 		if ( $version[0] < $pMajor )
 		{
 			$requirementsMet = FALSE;
 		}
-		// Check the minor version if set.
-		if ( is_int($pMinor) && $version[1] < $pMinor )
+		else if ( $version[0] == $pMajor )
 		{
-			$requirementsMet = FALSE;
-		}
-		// Check the release version if set.
-		if ( is_int($pRelease) && $version[2] < $pRelease )
-		{
-			$requirementsMet = FALSE;
+			// Check the minor version if set.
+			if ( is_int($pMinor) && $version[1] < $pMinor )
+			{
+				$requirementsMet = FALSE;
+			}
+			else if ( $requirementsMet && is_int($pMinor) && $version[1] == $pMinor )
+			{
+				// Check the release version if set.
+				if ( is_int($pRelease) && $version[2] < $pRelease )
+				{
+					$requirementsMet = FALSE;
+				}
+			}
 		}
 		// Throw the error when the required version is not met.
 		if ( !$requirementsMet )
