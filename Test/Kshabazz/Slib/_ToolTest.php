@@ -22,16 +22,26 @@ class _ToolTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals( 'testMe', $lowerCamelCased, 'Invalid CamelCase returned.' );
 		$this->assertEquals( 'TestMe', $upperCamelCased, 'Invalid camelCase returned.' );
 	}
+
 	/**
 	 * Check PHP version
-	 *
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage Your PHP version is '5.5.3'. The minimum required PHP version is '6.6.4'. You'll need to upgrade in order to use this application.
 	 */
-	public function test_check_php_version_function()
+	public function test_check_valid_php_version_function()
 	{
 		$requirementMet = \Kshabazz\Slib\checkPhpVersion( 5, 5, 3 );
 		$this->assertTrue( $requirementMet, 'Requirements were not met, checkPhpVersion failed.' );
+	}
+
+	/**
+	 * Check PHP version
+\	 */
+	public function test_check_invalid_php_version_function()
+	{
+		$phpVersion = phpversion();
+		$this->setExpectedException(
+			'Exception',
+			"Your PHP version is '{$phpVersion}'. The minimum required PHP version is '6.6.4'. You'll need to upgrade in order to use this application."
+		);
 		\Kshabazz\Slib\checkPhpVersion( 6, 6, 4 );
 		$this->fail( 'No \Exception throw as expected.' );
 	}
