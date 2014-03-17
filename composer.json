@@ -10,7 +10,7 @@
 		}
 	],
 	"require": {
-		"php": ">=5.4.0"
+		"php": ">=5.5.10"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*",
@@ -19,7 +19,7 @@
 	"autoload": {
 		"psr-0": { "Kshabazz\\": "src/" },
 		"files": [
-			"src/Kshabazz/Slib/_Tool.php"
+			"src/Kshabazz/Slib/Function.php"
 		]
 	}
 }
