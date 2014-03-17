@@ -10,7 +10,7 @@
  * Class _Tool
  * @package Kshabazz\Slib\Test
  */
-class _ToolTest extends \PHPUnit_Framework_TestCase
+class FunctionTest extends \PHPUnit_Framework_TestCase
 {
 	/**
 	 * Test converting a string to camel-case.
