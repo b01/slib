@@ -1,13 +1,8 @@
 <?php namespace Kshabazz\Slib;
 /**
  * Tools to help simplify repetitive task.
- * Diablo 3 Assistant License is under The MIT License (MIT)
- * [OSI Approved License]. Please read LICENSE.txt, included with this
- * software for the full licensing information. If no LICENSE.txt accompanied
- * this software, then no license is granted.
- *
- * @package kshabazz\d3a\Controller
- * @copyright (c) 2012-2013 Khalifah K. Shabazz
+ * @package \Kshabazz\Slib
+ * @copyright (c) 2013-2014 Khalifah K. Shabazz
  */
 
 /**
