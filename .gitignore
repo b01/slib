@@ -6,3 +6,5 @@ private.ini
 private/
 vendor
 composer.phar
+coverage-output
+save-test-file.txt
