@@ -12,6 +12,13 @@
  */
 class FunctionTest extends \PHPUnit_Framework_TestCase
 {
+	private
+		$fixtures;
+
+	public function setUp()
+	{
+		$this->fixtures =  __DIR__ . '/../../fixtures';
+	}
 	/**
 	 * Test converting a string to camel-case.
 	 */
@@ -69,7 +76,7 @@ class FunctionTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_includeContents_function()
 	{
-		$contents = \Kshabazz\Slib\includeContents( __DIR__ . '/../../Fixtures/test.php' );
+		$contents = \Kshabazz\Slib\includeContents( $this->fixtures . '/test.php' );
 		$this->assertEquals( 'test', $contents, 'Could not get contents from test file.' );
 	}
 
@@ -78,7 +85,7 @@ class FunctionTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_includeContents_of_non_existing_file()
 	{
-		$contents = \Kshabazz\Slib\includeContents( __DIR__ . '/../../Fixtures/est.php' );
+		$contents = \Kshabazz\Slib\includeContents( $this->fixtures . '/non-existing-file.php' );
 		$this->assertFalse( $contents, 'Unexpected file content from non-existant file.' );
 	}
 
@@ -105,7 +112,7 @@ class FunctionTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_loadJsonFile_function()
 	{
-		$ary = \Kshabazz\Slib\loadJsonFile( __DIR__ . '/../../Fixtures/test.json' );
+		$ary = \Kshabazz\Slib\loadJsonFile( $this->fixtures . '/test.json' );
 		$this->assertEquals( '1234', $ary['test'], 'Could not load JSON data from test file.' );
 	}
 
@@ -114,7 +121,7 @@ class FunctionTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_fail_of_loadJsonFile_function()
 	{
-		$ary = \Kshabazz\Slib\loadJsonFile( __DIR__ . '/../../Fixtures/empty.json' );
+		$ary = \Kshabazz\Slib\loadJsonFile( $this->fixtures . '/empty.json' );
 		$this->assertEquals( 0, count($ary), 'Unexpected data loaded from empty JSON test file.' );
 	}
 
@@ -136,13 +143,14 @@ class FunctionTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_saveFile_function()
 	{
-		$dir = __DIR__ . '/../../Fixtures/test';
-		$file = $dir . '/save.txt';
+		// todo: change to temp space.
+		$tempDir = $this->fixtures . '/bunker';
+		$file = $tempDir . '/save-test-file.txt';
 		$saved = \Kshabazz\Slib\saveFile( $file, 'test' );
 		$this->assertEquals( 4, $saved, 'Unable to save file.' );
 		$this->assertFileExists( $file, 'Unexpected data loaded from empty JSON test file.' );
 		unlink( $file );
-		rmdir( $dir );
+		rmdir($tempDir);
 	}
 
 	/**

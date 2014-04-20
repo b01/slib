@@ -88,4 +88,17 @@ class HttpRequesterTest extends \PHPUnit_Framework_TestCase
 		$httpRequester = new HttpRequester( NULL );
 		$httpRequester->setPostData([ $testCase ]);
 	}
+	/**
+	 * @vcr google-request.yml
+	 */
+	public function test_send()
+	{
+		$http = new \Kshabazz\Slib\HttpRequester( $this->url );
+		$http->send();
+		$this->assertEquals(
+			200,
+			$http->responseCode(),
+			'Failed to retrieve ' . $this->url
+		);
+	}
 }

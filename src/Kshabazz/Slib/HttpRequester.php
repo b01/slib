@@ -63,11 +63,11 @@ class HttpRequester
 	public function request( $pUrl, $pOptions = NULL )
 	{
 		$returnValue = NULL;
-		if ( \isString($pUrl) )
+		if ( isString($pUrl) )
 		{
 			$this->url = $pUrl;
 			// set curlOptions, replaces previous curlOptions.
-			if ( \isArray($pOptions) )
+			if ( isArray($pOptions) )
 			{
 				$this->curlOptions = $pOptions;
 			}
@@ -87,7 +87,7 @@ class HttpRequester
 	 */
 	public function responseCode()
 	{
-		if ( \isArray($this->requestInfo) && array_key_exists("http_code", $this->requestInfo) )
+		if ( isArray($this->requestInfo) && array_key_exists("http_code", $this->requestInfo) )
 		{
 			return $this->requestInfo[ "http_code" ];
 		}
@@ -108,10 +108,10 @@ class HttpRequester
 			// set any curl curlOptions needed.
 			curl_setopt_array( $this->curl, $this->curlOptions );
 			// Send the request and get a response.
-			$responseText = \curl_exec( $this->curl );
+			$responseText = curl_exec( $this->curl );
 			// get the status of the call
-			$this->requestInfo = \curl_getinfo( $this->curl );
-			\curl_close( $this->curl );
+			$this->requestInfo = curl_getinfo( $this->curl );
+			curl_close( $this->curl );
 			if ( !empty($responseText) )
 			{
 				$returnValue = $responseText;

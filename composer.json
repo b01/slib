@@ -14,7 +14,9 @@
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*",
-		"squizlabs/php_codesniffer": "1.*"
+		"squizlabs/php_codesniffer": "1.5.2",
+		"php-vcr/php-vcr": "dev-master",
+		"php-vcr/phpunit-testlistener-vcr": "dev-master"
 	},
 	"autoload": {
 		"psr-0": { "Kshabazz\\": "src/" },
