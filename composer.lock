@@ -247,12 +247,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-vcr/php-vcr.git",
-                "reference": "a157f6908c1219052039a407730e0e46a015db3e"
+                "reference": "2f71fb9ffdea355646d541fe4e87064f196b68c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-vcr/php-vcr/zipball/a157f6908c1219052039a407730e0e46a015db3e",
-                "reference": "a157f6908c1219052039a407730e0e46a015db3e",
+                "url": "https://api.github.com/repos/php-vcr/php-vcr/zipball/2f71fb9ffdea355646d541fe4e87064f196b68c2",
+                "reference": "2f71fb9ffdea355646d541fe4e87064f196b68c2",
                 "shasum": ""
             },
             "require": {
@@ -284,7 +284,7 @@
                 }
             ],
             "description": "Record your test suite's HTTP interactions and replay them during future test runs for fast, deterministic, accurate tests.",
-            "time": "2014-04-19 10:54:09"
+            "time": "2014-04-26 11:15:33"
         },
         {
             "name": "php-vcr/phpunit-testlistener-vcr",
@@ -567,16 +567,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "51be45fb3c0e565bcf158835047b0b5a4188c326"
+                "reference": "a702318e713e482a746bc15cea01b61403d7dcdb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/51be45fb3c0e565bcf158835047b0b5a4188c326",
-                "reference": "51be45fb3c0e565bcf158835047b0b5a4188c326",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a702318e713e482a746bc15cea01b61403d7dcdb",
+                "reference": "a702318e713e482a746bc15cea01b61403d7dcdb",
                 "shasum": ""
             },
             "require": {
+                "ext-ctype": "*",
                 "ext-dom": "*",
+                "ext-json": "*",
                 "ext-pcre": "*",
                 "ext-reflection": "*",
                 "ext-spl": "*",
@@ -592,9 +594,6 @@
                 "pear-pear.php.net/pear": "1.9.4"
             },
             "suggest": {
-                "ext-json": "*",
-                "ext-simplexml": "*",
-                "ext-tokenizer": "*",
                 "phpunit/php-invoker": "~1.1"
             },
             "bin": [
@@ -633,7 +632,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-04-19 12:05:50"
+            "time": "2014-04-26 05:26:20"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
