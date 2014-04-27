@@ -93,6 +93,7 @@ class HttpRequesterTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_send()
 	{
+		$cassettePath = \VCR\VCR::configure()->getCassettePath();
 		$http = new \Kshabazz\Slib\HttpRequester( $this->url );
 		$http->send();
 		$this->assertEquals(

@@ -240,7 +240,7 @@ function camelCase( $pString, $upperCaseFirst = FALSE )
 		}
 		catch ( \Exception $pError )
 		{
-			throw new \Exception( "There is a problem in %s on line %s." );
+			throw new \Exception( $pError->getMessage() );
 		}
 
 		return $fileSaved;
