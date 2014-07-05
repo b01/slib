@@ -15,7 +15,7 @@ class HttpRequesterTest extends \PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-		$this->url = 'http://www.example.com';
+		$this->url = 'http://www.google.com';
 	}
 
 	public function test_initialization()
@@ -48,52 +48,47 @@ class HttpRequesterTest extends \PHPUnit_Framework_TestCase
 
 	public function test_setting_headers()
 	{
-		$testCase = 'Content-type: text/xml';
+		$expected = 'test/1234';
+		$testCase = [ 'content-type' => $expected ];
 		$httpRequester = new HttpRequester( NULL );
-		$httpRequester->headers([ $testCase ]);
-		$curlOptions = $httpRequester->options();
+		$httpRequester->addHeaders( $testCase );
+		$headers = $httpRequester->headers();
 		$this->assertEquals(
-			$testCase,
-			$curlOptions[ \CURLOPT_HTTPHEADER ][ 0 ],
+			$expected,
+			$headers[ 'content-type' ],
 			'Could not retrieve header.'
 		);
 	}
 
 	public function test_setting_post_data()
 	{
-		$testCase = 'test 1234';
 		$httpRequester = new HttpRequester( NULL );
-		$httpRequester->setPostData( $testCase );
-		$curlOptions = $httpRequester->options();
-		// Verify POST flag was set.
-		$this->assertTrue(
-			$curlOptions[ \CURLOPT_POST ],
-			'Could not set post flag.'
-		);
+		$httpRequester->setPostData([ 'test' => 1234 ]);
+		$postData = $httpRequester->postData();
 		// Verify POST data was set.
 		$this->assertEquals(
-			$testCase,
-			$curlOptions[ \CURLOPT_POSTFIELDS ],
+			1234,
+			$postData[ 'test' ],
 			'Could not set post data.'
 		);
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage POST data must be a string.
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage must be of the type array
 	 */
 	public function test_setting_invalid_post_data()
 	{
 		$testCase = 'test 1234';
 		$httpRequester = new HttpRequester( NULL );
-		$httpRequester->setPostData([ $testCase ]);
+		$httpRequester->setPostData( $testCase );
 	}
+
 	/**
 	 * @vcr google-request.yml
 	 */
 	public function test_send()
 	{
-		$cassettePath = \VCR\VCR::configure()->getCassettePath();
 		$http = new \Kshabazz\Slib\HttpRequester( $this->url );
 		$http->send();
 		$this->assertEquals(
