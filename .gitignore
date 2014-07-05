@@ -1,10 +1,11 @@
 .htaccess
-.user.ini
 .idea/
+.user.ini
 composer.bat
-private.ini
-private/
-vendor
+composer.lock
 composer.phar
 coverage-output
+private/
+private.ini
 save-test-file.txt
+vendor/

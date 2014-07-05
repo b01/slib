@@ -4,6 +4,6 @@
  */
 require_once __DIR__ . '/../vendor/autoload.php';
 // configure PHP-VCR
-\VCR\VCR::configure()->enableLibraryHooks([ 'curl' ]);
-\VCR\VCR::turnOn();
+$fixturesPath = realpath(__DIR__ . DIRECTORY_SEPARATOR . 'fixtures');
+\VCR\VCR::configure()->setCassettePath($fixturesPath);
 // Writing below this line can cause headers to be sent before intended ?>

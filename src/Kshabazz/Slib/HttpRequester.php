@@ -6,33 +6,38 @@
 
 /**
  * Class HttpRequester
+ * For quick no-real-setup HTTP request, all you need is a URL and to set the content type, and optional POST data.
  * Requires cURL extension
  *
  * @package Kshabazz\Slib
  */
 class HttpRequester
 {
+	const
+		TYPE_HTTP = 'text/html; charset=utf-8',
+		TYPE_JSON = 'application/json; charset=utf-8';
+
 	protected
-		$curl,
-		$curlOptions,
 		$headers,
+		$httpClient,
 		$postData,
 		$requestInfo,
 		$responseText,
+		$statusCode,
 		$url;
 
 	/**
 	 * Constructor
 	 */
-	public function __construct( $pUrl, array $pOptions = NULL )
+	public function __construct( $pUrl, array $pHeaders = ['content-type' => self::TYPE_HTTP] )
 	{
-		$this->curlOptions = [ \CURLOPT_RETURNTRANSFER => TRUE ];
-		$this->headers = [ 'Content-type: text/html;' ];
+		$this->headers = $pHeaders;
+		// Init an HTTP client to send a request.
+		$this->httpClient = new \GuzzleHttp\Client();
+		$this->postData = NULL;
 		$this->requestInfo = NULL;
 		$this->responseText = NULL;
 		$this->url = $pUrl;
-		// init curl.
-		$this->curl = curl_init( $this->url );
 	}
 
 	/**
@@ -42,9 +47,8 @@ class HttpRequester
 	{
 		// PHP does this auto, but I wanna make sure it gets done myself.
 		unset(
-			$this->curl,
-			$this->curlOptions,
 			$this->headers,
+			$this->httpClient,
 			$this->requestInfo,
 			$this->postData,
 			$this->responseText,
@@ -53,75 +57,95 @@ class HttpRequester
 	}
 
 	/**
-	 * Allow using this object for multiple URL request.
+	 * Set request headers.
 	 *
-	 * @param $pUrl
-	 * @param $pOptions array replace previous curlOptions set, however, this will not unset any curlOptions in curl set by previous calls to send().
-	 * @return mixed|null
-	 * @throws \Exception
+	 * @param array $pHeaders
+	 * @return $this
 	 */
-	public function request( $pUrl, $pOptions = NULL )
+	public function addHeaders( array $pHeaders )
 	{
-		$returnValue = NULL;
-		if ( isString($pUrl) )
-		{
-			$this->url = $pUrl;
-			// set curlOptions, replaces previous curlOptions.
-			if ( isArray($pOptions) )
-			{
-				$this->curlOptions = $pOptions;
-			}
-			// Return the response text.
-			$returnValue = $this->send();
-		}
-		else
-		{
-			throw new \Exception( "Invalid URL '{$pUrl}'" );
-		}
-		return $returnValue;
+		$lowerCaseKeys = array_change_key_case( $pHeaders );
+		$this->headers = array_merge( $this->headers, $lowerCaseKeys );
+		return $this;
+	}
+
+	/**
+	 * Get the headers.
+	 *
+	 * @return array
+	 */
+	public function headers()
+	{
+		return $this->headers;
+	}
+
+	/**
+	 * Get any data set for the request.
+	 *
+	 * @return null|array
+	 */
+	public function postData()
+	{
+		return $this->postData;
 	}
 
 	/**
 	 * Get the HTTP response code of the request.
-	 * @return int HTTP response code.
+	 *
+	 * @return int|NULL HTTP response code.
 	 */
 	public function responseCode()
 	{
-		if ( isArray($this->requestInfo) && array_key_exists("http_code", $this->requestInfo) )
-		{
-			return $this->requestInfo[ "http_code" ];
-		}
-		return NULL;
+		return $this->statusCode;
 	}
 
 	/**
 	 * Send an HTTP request
+	 *
 	 * @return mixed|null
 	 * @throws \Exception
 	 */
 	public function send()
 	{
-		//
-		$returnValue = NULL;
-		if ( !empty($this->url) )
+		if ( empty($this->url) )
 		{
-			// set any curl curlOptions needed.
-			curl_setopt_array( $this->curl, $this->curlOptions );
-			// Send the request and get a response.
-			$responseText = curl_exec( $this->curl );
-			// get the status of the call
-			$this->requestInfo = curl_getinfo( $this->curl );
-			curl_close( $this->curl );
-			if ( !empty($responseText) )
-			{
-				$returnValue = $responseText;
-			}
+			throw new \Exception( "URL was not set: '{$this->url}'" );
 		}
-		else
+		// Clear previous response text.
+		$this->responseText = NULL;
+		// Decide if we need to POST or GET the request.
+		if ( is_array($this->postData) )
 		{
-			throw new \Exception( "Invalid URL: '{$this->url}'" );
+			$request = $this->httpClient->createRequest( 'POST', $this->url );
+			$request->setBody($this->postData);
 		}
-		return $returnValue;
+		else  // Do a GET
+		{
+			$request = $this->httpClient->createRequest( 'GET', $this->url );
+		}
+
+		// Add any additional headers.
+		$request->addHeaders( $this->headers );
+		$response = $this->httpClient->send( $request );
+		$this->statusCode = (int) $response->getStatusCode();
+		if ( $this->statusCode === 200 )
+		{
+			// Always return as a string so we can store it, we can decode ourselves.
+			$this->responseText = (string) $response->getBody();
+		}
+		return $this->responseText;
+	}
+
+	/**
+	 * Set any data you wish to POST to the request.
+	 *
+	 * @param array $pPostData
+	 * @return $this
+	 */
+	public function setPostData( array $pPostData )
+	{
+		$this->postData = $pPostData;
+		return $this;
 	}
 
 	/**
@@ -130,41 +154,7 @@ class HttpRequester
 	public function setUrl( $pUrl )
 	{
 		$this->url = $pUrl;
-	}
-
-	/**
-	 * Set the URL of the request.
-	 */
-	public function headers( $pHeaders )
-	{
-		$this->headers = $pHeaders;
-		$this->curlOptions[ \CURLOPT_HTTPHEADER ] = $this->headers;
-		return $this->headers;
-	}
-
-	/**
-	 * Currently set cURL options.
-	 * @return array
-	 */
-	public function options()
-	{
-		return $this->curlOptions;
-	}
-
-	/**
-	 * Set the URL of the request.
-	 * @param $pData
-	 * @throws \InvalidArgumentException
-	 */
-	public function setPostData( $pData )
-	{
-		if ( !is_string($pData) )
-		{
-			throw new \InvalidArgumentException( 'POST data must be a string.' );
-		}
-		$this->postData = $pData;
-		$this->curlOptions[ \CURLOPT_POST ] = TRUE;
-		$this->curlOptions[ \CURLOPT_POSTFIELDS ] = $this->postData;
+		return $this;
 	}
 
 	/**
