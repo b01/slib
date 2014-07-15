@@ -1,4 +1,4 @@
-<?php namespace Kshabazz\Slib\Test;
+<?php namespace Kshabazz\Test\Slib;
 /**
  * Created by PhpStorm.
  * User: Khalifah
@@ -13,14 +13,15 @@ use Kshabazz\Slib\Sql;
  */
 class SqlTest extends \PHPUnit_Framework_TestCase
 {
-	/**
-	 * Test instantiation.
-	 */
-	public function test_retrieving_an_sql_object()
+	private $pdo;
+
+	public function setUp()
 	{
-		$this->assertInstanceOf( '\\kshabazz\\Slib\\Sql', new Sql(),
-			'Could not instantiate a new Sql object.'
+		$updDir = DIRECTORY_SEPARATOR . '..';
+		$pdoPath = realpath(
+			__DIR__ . $updDir . $updDir . DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'Pdo.php'
 		);
+		$this->pdo = include $pdoPath;
 	}
 
 	/**
@@ -28,7 +29,7 @@ class SqlTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_retrieving_ip_address()
 	{
-		$sql = new Sql( '127.0.0.1' );
+		$sql = new Sql( $this->pdo, '127.0.0.1' );
 		// once the IP goes in, it should never change, no setter for IP address.
 		$this->assertEquals( '127.0.0.1', $sql->ipAddress(), 'Invalid IP address returned.' );
 	}
@@ -40,7 +41,7 @@ class SqlTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_insert_query()
 	{
-		$sql = new Sql();
+		$sql = new Sql( $this->pdo );
 		$column1Value = 'test column 1';
 		$truncateStmt = $sql->pdo()->prepare( 'TRUNCATE TABLE `test_1`' );
 		$insertStmt = $sql->pdo()->prepare( "INSERT INTO `test_1` (`column1`) VALUES('{$column1Value}');" );
@@ -64,7 +65,7 @@ class SqlTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_pdoQuery_catch_block()
 	{
-		$sql = new Sql();
+		$sql = new Sql( $this->pdo );
 		// invalid column name given.
 		$selectStmt = $sql->pdo()->prepare( "SELECT `column1` FROM `test_1` WHERE `id` = :id" );
 		// run invalid query that should cause an error.
@@ -79,7 +80,7 @@ class SqlTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_select_method()
 	{
-		$sql = new Sql();
+		$sql = new Sql(  $this->pdo );
 		$column1Value = 'test column 1';
 		$truncateStmt = $sql->pdo()->prepare( 'TRUNCATE TABLE `test_1`' );
 		$insertStmt = $sql->pdo()->prepare( "INSERT INTO `test_1` (`column1`) VALUES('{$column1Value}');" );
@@ -102,7 +103,7 @@ class SqlTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_invalid_use_of_select_method()
 	{
-		$sql = new Sql();
+		$sql = new Sql(  $this->pdo );
 		$selectQuery = 'SELECT `id`, `column1` FROM `test_1` WHERE `id` = ?';
 		// retrieve the test data.
 		$sql->select( $selectQuery );
@@ -114,7 +115,7 @@ class SqlTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_pdoQueryBind_method()
 	{
-		$sql = new Sql();
+		$sql = new Sql( $this->pdo );
 		$column1Val = 'test column 1';
 		$sql->pdo()->prepare( 'TRUNCATE TABLE `test_1`' );
 		$sql->pdoQueryBind(
@@ -136,7 +137,7 @@ class SqlTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_invalid_use_of_pdoQueryBind_method()
 	{
-		$sql = new Sql();
+		$sql = new Sql( $this->pdo );
 		$column1Val = 'test column 1';
 		// retrieve the test data and assert.
 		$results = $sql->pdoQueryBind( 'SELECT `id`, `column1` FROM `test_1` WHERE `id` = ?' );

@@ -13,10 +13,10 @@ class Sql
 	/**
 	 * Constructor - Get an SQL connection object.
 	 */
-	public function __construct( $p_ipAddress = NULL, $type = NULL )
+	public function __construct( \PDO $pPdo, $pIpAddress = NULL )
 	{
-		$this->ipAddress = $p_ipAddress;
-		$this->pdoh = include __DIR__ . '/private/Pdo.php';
+		$this->ipAddress = $pIpAddress;
+		$this->pdoh = $pPdo;
 	}
 
 	/**

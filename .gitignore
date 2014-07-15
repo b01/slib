@@ -6,6 +6,5 @@ composer.lock
 composer.phar
 coverage-output
 private/
-private.ini
 save-test-file.txt
 vendor/
