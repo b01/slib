@@ -7,9 +7,12 @@
 		}
 	],
 	"autoload": {
-		"psr-0": { "Kshabazz\\": "src/" },
+		"psr-4": {
+			"Kshabazz\\Slib\\": "src/",
+			"Kshabazz\\Tests\\Slib\\": "tests/"
+		},
 		"files": [
-			"src/Kshabazz/Slib/Function.php"
+			"src/functions.php"
 		]
 	},
 	"description": "A collection of useful functions to aid developing.",
