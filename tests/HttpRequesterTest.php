@@ -1,4 +1,4 @@
-<?php namespace Kshabazz\Slib\Test;
+<?php namespace Kshabazz\Tests\Slib;
 /**
  * Developers: Khalifah K. Shabazz
  */

@@ -9,11 +9,13 @@
 	"autoload": {
 		"psr-4": {
 			"Kshabazz\\Slib\\": "src/",
-			"Kshabazz\\Tests\\Slib\\": "tests/"
 		},
 		"files": [
 			"src/functions.php"
 		]
+	},
+	"autoload-dev": {
+		"Kshabazz\\Tests\\Slib\\": "tests/"
 	},
 	"description": "A collection of useful functions to aid developing.",
 	"name": "kshabazz/slib",
