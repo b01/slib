@@ -17,11 +17,16 @@ class SqlTest extends \PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-		$updDir = DIRECTORY_SEPARATOR . '..';
-		$pdoPath = realpath(
-			__DIR__ . $updDir . $updDir . DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'Pdo.php'
+		$this->pdo = new \PDO(
+			'mysql:host=127.0.0.1;dbname=test;charset=utf8',
+			'testuser',
+			'test1234',
+			[ // Show human readable errors from the database server when they occur.
+			  \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+			  \PDO::ATTR_EMULATE_PREPARES => FALSE,
+			  \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
+			]
 		);
-		$this->pdo = include $pdoPath;
 	}
 
 	/**
