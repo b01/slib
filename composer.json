@@ -20,8 +20,7 @@
 	"description": "A collection of useful functions to aid developing.",
 	"name": "kshabazz/slib",
 	"require": {
-		"php": ">=5.5.10",
-		"guzzlehttp/guzzle": "4.*"
+		"php": ">=5.5.10"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "4.*",
