@@ -124,7 +124,7 @@ class FunctionTest extends \PHPUnit_Framework_TestCase
 	public function test_fail_of_loadJsonFile_function()
 	{
 		$ary = \Kshabazz\Slib\loadJsonFile( $this->fixtures . 'empty.json' );
-		$this->assertEquals( 0, count($ary), 'Unexpected data loaded from empty JSON test file.' );
+		$this->assertEquals( 0, \count($ary), 'Unexpected data loaded from empty JSON test file.' );
 	}
 
 	/**
@@ -135,7 +135,7 @@ class FunctionTest extends \PHPUnit_Framework_TestCase
 		$source = [ 1, 2, 3, 4 ];
 		$item1 = \Kshabazz\Slib\randomElementsFromArray( $source );
 		$this->assertTrue(
-			in_array($item1, $source, TRUE),
+			\in_array($item1, $source, TRUE),
 			'Could not assert that a Random element from source array was returned.'
 		);
 	}
@@ -151,8 +151,8 @@ class FunctionTest extends \PHPUnit_Framework_TestCase
 		$saved = \Kshabazz\Slib\saveFile( $file, 'test' );
 		$this->assertEquals( 4, $saved, 'Unable to save file.' );
 		$this->assertFileExists( $file, 'Unexpected data loaded from empty JSON test file.' );
-		unlink( $file );
-		rmdir($tempDir);
+		\unlink( $file );
+		\rmdir( $tempDir );
 	}
 
 	/**
@@ -161,7 +161,7 @@ class FunctionTest extends \PHPUnit_Framework_TestCase
 	public function test_quantity_returned_from_UniqueRandomNumbersWithinRange_function()
 	{
 		$randomNumbers = \Kshabazz\Slib\UniqueRandomNumbersWithinRange( 3, 5, 3 );
-		$this->assertEquals( 3, count($randomNumbers), 'Invalid Quantity of random numbers returned.' );
+		$this->assertEquals( 3, \count($randomNumbers), 'Invalid Quantity of random numbers returned.' );
 	}
 
 	/**
