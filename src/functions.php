@@ -210,37 +210,29 @@ function camelCase( $pString, $upperCaseFirst = FALSE )
 	}
 
 	/**
-	 * Save a file like file_put_contents, but with additional error checking.
+	 * Save content to a file; but will also make the directory if it does not exists.
 	 *
 	 * @param string $pFileName path.
 	 * @param string $pContent data to save in the file.
 	 * @throws \Exception
-	 * @return mixed
+	 * @return bool
 	 */
 	function saveFile( $pFileName, $pContent )
 	{
-		$fileSaved = FALSE;
-		try
+		$directory = \dirname( $pFileName );
+		if ( !is_dir($directory) )
 		{
-			$directory = dirname( $pFileName );
-			if ( !is_dir($directory) )
+			$madeDir = \mkdir( $directory, 0755, TRUE );
+			if ( $madeDir === FALSE )
 			{
-				$madeDir = mkdir( $directory, 0755, TRUE );
-				if ( $madeDir === FALSE )
-				{
-					throw new \Exception( "mkdir: Unable make directory '{$directory}'." );
-				}
-			}
-			// Save data to a file.
-			$fileSaved = file_put_contents( $pFileName, $pContent, LOCK_EX );
-			if ( $fileSaved === FALSE )
-			{
-				throw new \Exception( "file_put_contents: Unable to save file '{$pFileName}'." );
+				throw new \Exception( "mkdir: Unable make directory '{$directory}'." );
 			}
 		}
-		catch ( \Exception $pError )
+		// Save data to a file.
+		$fileSaved = \file_put_contents( $pFileName, $pContent, \LOCK_EX );
+		if ( $fileSaved === FALSE )
 		{
-			throw new \Exception( $pError->getMessage() );
+			throw new \Exception( "file_put_contents: Unable to save file '{$pFileName}'." );
 		}
 
 		return $fileSaved;
