@@ -25,9 +25,7 @@
 		"php": ">=5.5.10"
 	},
 	"require-dev": {
-		"phpunit/phpunit": ">=3.7.*",
-		"squizlabs/php_codesniffer": ">=1.*",
-		"php-vcr/php-vcr": "dev-master",
-		"php-vcr/phpunit-testlistener-vcr": "dev-master"
+		"phpunit/phpunit": ">=3.7",
+		"squizlabs/php_codesniffer": ">=1.0"
 	}
 }
