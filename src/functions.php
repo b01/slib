@@ -260,4 +260,29 @@ function camelCase( $pString, $upperCaseFirst = FALSE )
 		return array_slice( $numbersAry, 0, $pQuantity );
 	}
 
+	/**
+	 * Print the debug backtrace in the following line format.
+	 * Format: [className::]functionName( parameters )
+	 */
+	function print_debug_trace()
+	{
+		$backtrace = \debug_backtrace();
+		foreach ($backtrace as $trace)
+		{
+			$className = (empty($trace['class'])) ? '' : $traceStr = $trace['class'] . '::' . $traceStr;
+			$functionName = $traceStr = $trace['function'];
+			$args = json_encode($trace['args']);
+			if (count($trace['args']) > 0)
+			{
+				$parameters = '( ' . substr($args, 1, -1) . ' )';
+			}
+			else
+			{
+				$parameters = '()';
+			}
+			echo "\n" . $className . $functionName . $parameters;
+		}
+		echo "\n";
+	}
+
 // Writing below this line can cause headers to be sent before intended ?>
