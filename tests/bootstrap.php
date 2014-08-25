@@ -11,6 +11,9 @@ require_once __DIR__
 define( 'Kshabazz\\Tests\\Slib\\FIXTURES_DIR', __DIR__ . DIRECTORY_SEPARATOR . 'fixtures' );
 
 // Setup PHP-VCR
-\VCR\VCR::configure()->setBlackList(['FunctionTest']);
+$vcrConfig = \VCR\VCR::configure();
+$vcrConfig->setCassettePath( \Kshabazz\Tests\Slib\FIXTURES_DIR );
+$vcrConfig->setBlackList([ 'FunctionTest' ]);
+$vcrConfig->enableLibraryHooks([ 'curl' ]);
 \VCR\VCR::turnOn();
 // Writing below this line can cause headers to be sent before intended ?>

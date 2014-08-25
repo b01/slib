@@ -229,7 +229,7 @@ function camelCase( $pString, $upperCaseFirst = FALSE )
 			}
 		}
 		// Save data to a file.
-		$fileSaved = \file_put_contents( $pFileName, $pContent, \LOCK_EX );
+		$fileSaved = \file_put_contents( $pFileName, $pContent ); //, \LOCK_EX );
 		if ( $fileSaved === FALSE )
 		{
 			throw new \Exception( "file_put_contents: Unable to save file '{$pFileName}'." );
@@ -267,12 +267,12 @@ function camelCase( $pString, $upperCaseFirst = FALSE )
 	function print_debug_trace()
 	{
 		$backtrace = \debug_backtrace();
-		foreach ($backtrace as $trace)
+		foreach ( $backtrace as $trace )
 		{
-			$className = (empty($trace['class'])) ? '' : $traceStr = $trace['class'] . '::' . $traceStr;
-			$functionName = $traceStr = $trace['function'];
-			$args = json_encode($trace['args']);
-			if (count($trace['args']) > 0)
+			$functionName = $traceStr = $trace[ 'function' ];
+			$className = empty( $trace['class'] ) ? '' : $traceStr = $trace[ 'class' ] . '::' . $traceStr;
+			$args = \json_encode( $trace['args'] );
+			if ( \count($trace['args']) > 0)
 			{
 				$parameters = '( ' . substr($args, 1, -1) . ' )';
 			}
