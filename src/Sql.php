@@ -123,12 +123,7 @@ class Sql
 		}
 		catch ( \Exception $pError )
 		{
-			logError(
-				$pError,
-				"Bad query {$pSqlQuery} in %s on line %s."
-			);
-			// Friendly message to the user.
-			throw new \Exception( 'A PDO Error has occurred.' );
+			throw new \Exception( 'A PDO Error has occurred.', 500, $pError );
 		}
 		return $returnValue;
 	}
