@@ -87,9 +87,9 @@ class Sql
 	/**
 	 * Run a prepared SQL statement with an arbitrary number of values.
 	 *
-	 * Convenience method for building a parameterized statement from a string.
+	 * Convenience method for building a parametrized statement from a string.
 	 * This is done in a generic way. so that any statement can
-	 * be parameterized in a generic way.
+	 * be parametrized in a generic way.
 	 *
 	 * @param string $pSqlQuery
 	 *  example: 'INSERT INTO `test` ( `column1`, ...) VALUES( `:column1Val`, ... );'
@@ -115,7 +115,7 @@ class Sql
 			{
 				foreach ( $pBindings as $parameterName => $data )
 				{
-					$stmt->bindValue( ':' . $parameterName, $data[0], $data[1] );
+					$stmt->bindValue( $parameterName, $data[0], $data[1] );
 				}
 			}
 			// Run the query
