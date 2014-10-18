@@ -104,7 +104,7 @@ class SqlTest extends \PHPUnit_Framework_TestCase
 	 * Test invalid select statement.
 	 *
 	 * @expectedException \Exception
-	 * @expectedExceptionMessage A PDO Error has occurred
+	 * @expectedExceptionMessage Select statement failed
 	 */
 	public function test_invalid_use_of_select_method()
 	{

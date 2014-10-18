@@ -1,13 +1,20 @@
-<?php namespace kshabazz\slib;
+<?php namespace Kshabazz\Slib;
 /**
  * Generic methods for retrieving data from a database.
  *
  */
 
+/**
+ * Class Sql
+ *
+ * @package Kshabazz\Slib
+ */
 class Sql
 {
-	protected
-		$pdoh,
+	private
+		/** @var \PDO Database PDO handle. */
+		$pdo,
+		/** @var string Client IP address. */
 		$ipAddress;
 
 	/**
@@ -16,7 +23,7 @@ class Sql
 	public function __construct( \PDO $pPdo, $pIpAddress = NULL )
 	{
 		$this->ipAddress = $pIpAddress;
-		$this->pdoh = $pPdo;
+		$this->pdo = $pPdo;
 	}
 
 	/**
@@ -24,11 +31,9 @@ class Sql
 	 */
 	public function __destruct()
 	{
-		// close the DB connection.
-		$this->pdoh = null;
-		unset(
-			$this->ipAddress
-		);
+		// Close the DB connection.
+		$this->pdo = null;
+		unset( $this->ipAddress );
 	}
 
 	/**
@@ -45,7 +50,7 @@ class Sql
 	 */
 	public function pdo()
 	{
-		return $this->pdoh;
+		return $this->pdo;
 	}
 
 	/**
@@ -109,7 +114,7 @@ class Sql
 		try
 		{
 			// Bind values to the prepared statement.
-			$stmt = $this->pdoh->prepare( $pSqlQuery );
+			$stmt = $this->pdo->prepare( $pSqlQuery );
 			// has to be an array with at least on value.
 			if ( isArray($pBindings) )
 			{
@@ -132,8 +137,8 @@ class Sql
 	 * Perform a simple SELECT that does NOT have any parameters.
 	 *
 	 * @param string $pSelectStatement
-	 * @throws \Exception
 	 * @return mixed
+	 * @throws \Exception
 	 */
 	public function select( $pSelectStatement )
 	{
@@ -141,7 +146,7 @@ class Sql
 		try
 		{
 			// Set the select.
-			$stmt = $this->pdoh->prepare( $pSelectStatement );
+			$stmt = $this->pdo->prepare( $pSelectStatement );
 			// Call the database routine
 			$stmt->execute();
 			// Fetch all rows into an array.
@@ -152,16 +157,17 @@ class Sql
 			}
 			$stmt->closeCursor();
 		}
-		catch ( \Exception $p_error )
+		catch ( \Exception $pError )
 		{
-			logError(
-				$p_error,
-				"Select statement failed '{$pSelectStatement}' in %s on line %s"
+			$message = \sprintf(
+				'Select statement failed "%s" in %s on line %s',
+				$pSelectStatement,
+				$pError->getFile(),
+				$pError->getLine()
 			);
-			// Friendly message to the user.
-			throw new \Exception( 'A PDO Error has occurred.' );
+			throw new \Exception( $message, 501, $pError );
 		}
 		return $returnValue;
 	}
 }
-// Writing below this line can cause headers to be sent before intended ?>
+?>
