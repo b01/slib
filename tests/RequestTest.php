@@ -36,9 +36,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals( Request::CONTENT_TYPE_HTTP, $headers['content-type'] );
 	}
 
-	/**
-	 * @vcr example-dot-com-request.yml
-	 */
 	public function test_getting_the_same_url_put_in()
 	{
 		$request = new Request();
@@ -101,9 +98,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 		$Request->setPostData( $testCase );
 	}
 
-	/**
-	 * @vcr example-dot-com-request.yml
-	 */
 	public function test_send()
 	{
 		$http = new \Kshabazz\Slib\Request();

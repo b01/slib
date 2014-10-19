@@ -22,12 +22,11 @@
 	"description": "A collection of useful functions to aid developing.",
 	"name": "kshabazz/slib",
 	"require": {
-		"php": ">=5.5.10"
+		"php": ">=5.5.10",
+		"ext-curl": "*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": ">=3.7",
-		"squizlabs/php_codesniffer": ">=1.0",
-		"php-vcr/php-vcr": "dev-master",
-		"php-vcr/phpunit-testlistener-vcr": "dev-master"
+		"squizlabs/php_codesniffer": ">=1.0"
 	}
 }
