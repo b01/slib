@@ -87,23 +87,12 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 		);
 	}
 
-	/**
-	 * @expectedException \Exception
-	 * @expectedExceptionMessage must be of the type array
-	 */
-	public function test_setting_invalid_post_data()
-	{
-		$testCase = 'test 1234';
-		$Request = new Request();
-		$Request->setPostData( $testCase );
-	}
-
 	public function test_send()
 	{
 		$http = new \Kshabazz\Slib\Request();
 		$responseText = $http->send( $this->url );
-		// TODO: Find out why VCR does not properly set \curl_info.
-		//$this->assertEquals( 200, $http->responseCode(), 'Failed to retrieve ' . $this->url );
-		$this->assertNotFalse( $responseText, 'Retrieving response failed.' );
+		$this->assertEquals( 200, $http->responseCode(), 'Failed to retrieve ' . $this->url );
+//		$this->assertNotFalse( $responseText, 'Retrieving response failed.' );
 	}
 }
+?>
