@@ -18,7 +18,7 @@ class FunctionTest extends \PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-		$this->fixtures = FIXTURES_DIR . DIRECTORY_SEPARATOR;
+		$this->fixtures = FIXTURES_PATH . DIRECTORY_SEPARATOR;
 	}
 
 	/**

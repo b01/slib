@@ -8,6 +8,7 @@ require_once __DIR__
 	. DIRECTORY_SEPARATOR . 'autoload.php';
 
 // Set fixture path constant.
-define( 'Kshabazz\\Tests\\Slib\\FIXTURES_DIR', __DIR__ . DIRECTORY_SEPARATOR . 'fixtures' );
+$fixturesPath = realpath( __DIR__ . DIRECTORY_SEPARATOR . 'fixtures' );
+define( 'FIXTURES_PATH', $fixturesPath . DIRECTORY_SEPARATOR );
 
 ?>
