@@ -8,6 +8,7 @@
  * Class Request
  * Requires cURL extension
  *
+ * @deprecated Please use Http class, which does not require cURL.
  * @package Kshabazz\Slib
  */
 class Request
