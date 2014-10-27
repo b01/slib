@@ -27,6 +27,11 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 		);
 	}
 
+	static public function tearDownAfterClass()
+	{
+		stream_wrapper_restore( 'http' );
+	}
+
 	public function setUp()
 	{
 		$this->url = 'http://www.example.com';
