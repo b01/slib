@@ -6,23 +6,35 @@ This is a library with some tools to aid in performing common task.
 
 ### How to use the Request object:
 
-```PHP
+```php
 <?php
-// Initialize a request object.
-$request = new \Kshabazz\Slib\Request();
+
+use Kshabazz\Slib\Http;
+
+// Initialize a new HTTP client object.
+$httpClient = new Http();
+$url = 'http://www.example.com';
 
 // Set headers
-$request->setHeaders([
-    'Content-Type' => 'application/json; charset=utf-8'
+// Please note that the same header can be set multiple times, just like in the HTTP RFC.
+$httpClient->setHeaders([
+    'Content-Type: application/json; charset=utf-8',
+    'Custom-Header: custom value',
 ]);
 
-print_r( $request->headers() );
+// Make a request and check the response.
+$httpClient->send( $url );
+$responseCode = $http->responseCode();
+if ( $responseCode === 200 ) {
+    echo $httpClient->responseBody();
 
-// Output currently set headers:
-// Please note that header keys will be converted to lowercase.
-(
-    content-type => application/json; charset=utf-8
-)
+} else { // DEBUG
+    // Show what was sent in the last request.
+    var_dump( $httpClient->lastRequest() );
+    
+    // Show the response headers.
+    var_dump( $httpClient->responseHeaders() );
+}
 ?>
 ```
 
