@@ -43,10 +43,11 @@ if ( $responseCode === 200 ) {
 ```php
 <?php
 echo \Kshabazz\Slib\camelCase( 'test-me' );
-echo \Kshabazz\Slib\camelCase( 'test-me', TRUE );
-
 // Output:
 TestMe
+
+echo \Kshabazz\Slib\camelCase( 'test-me', TRUE );
+// Output:
 testMe
 ?>
 ```
