@@ -1,12 +1,12 @@
 <?php namespace Kshabazz\Test\Slib;
 
-use \Kshabazz\Slib\Http;
+use \Kshabazz\Slib\HttpClient;
 
 /**
  * Class RequestTest
  *
  * @package \Kshabazz\Test\Slib
- * @coversDefaultClass \Kshabazz\Slib\Http
+ * @coversDefaultClass \Kshabazz\Slib\HttpClient
  */
 class HttpTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,8 +21,8 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 
 	public function test_initialization()
 	{
-		$http = new Http();
-		$this->assertInstanceOf( '\\Kshabazz\\Slib\\Http', $http );
+		$http = new HttpClient();
+		$this->assertInstanceOf( '\\Kshabazz\\Slib\\HttpClient', $http );
 	}
 
 	/**
@@ -38,7 +38,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 	public function test_setHeaders()
 	{
 		$header = "test-header: test/1234";
-		$request = new Http();
+		$request = new HttpClient();
 		$request->setRequestHeaders([ $header ]);
 		// Force last request property to be set.
 		$request->send( $this->url );
@@ -59,7 +59,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 	public function test_setting_valid_post_data()
 	{
 		$testCase = [ 'test' => '1234' ];
-		$request = new Http();
+		$request = new HttpClient();
 		$request->post( $this->url, $testCase );
 		$actual = $request->lastRequest()[ 'content' ];
 		$this->assertEquals( 'test=1234', $actual );
@@ -72,7 +72,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 	public function test_setting_invalid_post_data()
 	{
 		$testCase = 'test 1234';
-		$Request = new Http();
+		$Request = new HttpClient();
 		$Request->post( $this->url, $testCase );
 	}
 
@@ -81,7 +81,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_getting_response_headers()
 	{
-		$http = new Http();
+		$http = new HttpClient();
 		$http->send( $this->url );
 		$responseHeaders = $http->responseHeaders();
 		$this->assertEquals( "HTTP/1.0 200 OK", $responseHeaders[0] );
@@ -92,7 +92,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_response_code()
 	{
-		$http = new Http();
+		$http = new HttpClient();
 		$http->send( $this->url );
 		$responseCode = $http->responseCode();
 		$this->assertEquals( 200, $responseCode );
@@ -103,7 +103,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_response_code_null()
 	{
-		$http = new Http();
+		$http = new HttpClient();
 		$http->send( $this->url );
 		$responseCode = $http->responseCode();
 		$this->assertEquals( NULL, $responseCode );
@@ -114,7 +114,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_setting_empty_url()
 	{
-		$http = new Http();
+		$http = new HttpClient();
 		$http->send( NULL );
 	}
 
@@ -123,7 +123,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_getting_response_body()
 	{
-		$http = new Http();
+		$http = new HttpClient();
 		$http->send( $this->url );
 		$responseBody = $http->responseBody();
 		$this->assertContains( 'Example Domain', $responseBody );
@@ -134,7 +134,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_setting_invalid_header_key()
 	{
-		$http = new Http();
+		$http = new HttpClient();
 		$http->setRequestHeader( NULL, NULL );
 	}
 
@@ -143,7 +143,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_setting_a_header()
 	{
-		$http = new Http();
+		$http = new HttpClient();
 		$expected = 'test: 1234';
 		$http->setRequestHeader( $expected );
 		$http->send( $this->url );
@@ -155,13 +155,13 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 	{
 		try
 		{
-			$request = new Http();
+			$request = new HttpClient();
 			$request->__destruct();
 			$request->metaData();
 		}
 		catch ( \Exception $pError )
 		{
-			$expected = 'Undefined property: Kshabazz\Slib\Http::$metaData';
+			$expected = 'Undefined property: Kshabazz\Slib\HttpClient::$metaData';
 			$this->assertContains( $expected, $pError->getMessage() );
 		}
 	}

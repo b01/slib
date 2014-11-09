@@ -17,7 +17,7 @@
 	<listeners>
 		<listener class="\Kshabazz\Interception\InterceptionListener">
 			<arguments>
-				<string>Http</string>
+				<string>HttpClient</string>
 				<string>./fixtures</string>
 			</arguments>
 		</listener>

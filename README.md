@@ -4,15 +4,15 @@ This is a library with some tools to aid in performing common task.
 
 ##Examples:
 
-###How to use the Http object to make an HTTP Request
+###How to use the HttpClient object to make an HTTP Request
 
 ```php
 <?php
 
-use \Kshabazz\Slib\Http;
+use \Kshabazz\Slib\HttpClient;
 
 // Initialize a new HTTP client object.
-$httpClient = new Http();
+$httpClient = new HttpClient();
 $url = 'http://www.example.com';
 
 // Set headers

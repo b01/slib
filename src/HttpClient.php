@@ -9,7 +9,7 @@
  *
  * @package Kshabazz\Slib
  */
-class Http
+class HttpClient
 {
 	const
 		CONTENT_TYPE_GET = 'content-type: text/html; charset=utf-8',
@@ -198,10 +198,11 @@ class Http
 
 	/**
 	 * Set request headers, removing any previously set request headers.
+
 	 *
-	 * @example setRequestHeaders([ "content-type: text/html; charset=utf-8\r\n" ]);f
+*@example setRequestHeaders([ "content-type: text/html; charset=utf-8\r\n" ]);f
 	 * @param array $pHeaders
-	 * @return Http
+	 * @return HttpClient
 	 * @throws \InvalidArgumentException
 	 */
 	public function setRequestHeaders( array $pHeaders )
