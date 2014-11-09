@@ -1,7 +1,6 @@
 <?php namespace Kshabazz\Test\Slib;
 
-use \Kshabazz\Slib\Http,
-	\Kshabazz\Interception\StreamWrappers\Http as HttpWrapper;
+use \Kshabazz\Slib\Http;
 
 /**
  * Class RequestTest
@@ -14,23 +13,6 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 	private
 		/** @var string */
 		$url;
-
-	static public function setUpBeforeClass()
-	{
-		\stream_wrapper_unregister( 'http' );
-		HttpWrapper::setSaveDir( FIXTURES_PATH );
-
-		\stream_register_wrapper(
-			'http',
-			'\\Kshabazz\\Interception\\StreamWrappers\\Http',
-			\STREAM_IS_URL
-		);
-	}
-
-	static public function tearDownAfterClass()
-	{
-		stream_wrapper_restore( 'http' );
-	}
 
 	public function setUp()
 	{
@@ -51,6 +33,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 	 * @uses \Kshabazz\Slib\Http::__destruct
 	 * @uses \Kshabazz\Slib\Http::setResponseHeaders
 	 * @uses \Kshabazz\Slib\Http::populateResponseCode
+	 * @interception ignore-example-com
 	 */
 	public function test_setHeaders()
 	{
@@ -71,6 +54,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 	 * @uses \Kshabazz\Slib\Http::__destruct
 	 * @uses \Kshabazz\Slib\Http::setResponseHeaders
 	 * @uses \Kshabazz\Slib\Http::populateResponseCode
+	 * @interception ignore-test-valid-post-data
 	 */
 	public function test_setting_valid_post_data()
 	{
@@ -89,9 +73,12 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 	{
 		$testCase = 'test 1234';
 		$Request = new Http();
-		$Request->post($this->url, $testCase);
+		$Request->post( $this->url, $testCase );
 	}
 
+	/**
+	 * @interception ignore-example-com
+	 */
 	public function test_getting_response_headers()
 	{
 		$http = new Http();
@@ -100,6 +87,9 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals( "HTTP/1.0 200 OK", $responseHeaders[0] );
 	}
 
+	/**
+	 * @interception ignore-example-com
+	 */
 	public function test_response_code()
 	{
 		$http = new Http();
@@ -108,12 +98,15 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals( 200, $responseCode );
 	}
 
+	/**
+	 * @interception test-response-code-null
+	 */
 	public function test_response_code_null()
 	{
 		$http = new Http();
 		$http->send( $this->url );
 		$responseCode = $http->responseCode();
-		$this->assertEquals( 200, $responseCode );
+		$this->assertEquals( NULL, $responseCode );
 	}
 
 	/**
@@ -125,6 +118,9 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 		$http->send( NULL );
 	}
 
+	/**
+	 * @interception ignore-example-com
+	 */
 	public function test_getting_response_body()
 	{
 		$http = new Http();
@@ -142,6 +138,9 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 		$http->setRequestHeader( NULL, NULL );
 	}
 
+	/**
+	 * @interception ignore-example-com
+	 */
 	public function test_setting_a_header()
 	{
 		$http = new Http();

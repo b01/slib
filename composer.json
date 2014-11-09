@@ -34,6 +34,6 @@
 	"require-dev": {
 		"phpunit/phpunit": ">=3.7",
 		"squizlabs/php_codesniffer": ">=1.0",
-		"kshabazz/interception": ">=0.0"
+		"kshabazz/interception": "dev-master"
 	}
 }

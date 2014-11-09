@@ -8,3 +8,4 @@ coverage-output
 private/
 save-test-file.txt
 vendor/
+tests/fixtures/ignore-*
