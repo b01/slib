@@ -9,7 +9,7 @@ This is a library with some tools to aid in performing common task.
 ```php
 <?php
 
-use Kshabazz\Slib\Http;
+use \Kshabazz\Slib\Http;
 
 // Initialize a new HTTP client object.
 $httpClient = new Http();
