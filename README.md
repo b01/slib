@@ -4,7 +4,7 @@ This is a library with some tools to aid in performing common task.
 
 ##Examples:
 
-### How to use the Request object:
+###How to use the Http object to make an HTTP Request
 
 ```php
 <?php
