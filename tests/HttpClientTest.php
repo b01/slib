@@ -8,7 +8,7 @@ use \Kshabazz\Slib\HttpClient;
  * @package \Kshabazz\Test\Slib
  * @coversDefaultClass \Kshabazz\Slib\HttpClient
  */
-class HttpTest extends \PHPUnit_Framework_TestCase
+class HttpClientTest extends \PHPUnit_Framework_TestCase
 {
 	private
 		/** @var string */
@@ -28,11 +28,11 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @covers ::setRequestHeaders
 	 * @covers ::lastRequest
-	 * @uses \Kshabazz\Slib\Http::__construct
-	 * @uses \Kshabazz\Slib\Http::send
-	 * @uses \Kshabazz\Slib\Http::__destruct
-	 * @uses \Kshabazz\Slib\Http::setResponseHeaders
-	 * @uses \Kshabazz\Slib\Http::populateResponseCode
+	 * @uses \Kshabazz\Slib\HttpClient::__construct
+	 * @uses \Kshabazz\Slib\HttpClient::send
+	 * @uses \Kshabazz\Slib\HttpClient::__destruct
+	 * @uses \Kshabazz\Slib\HttpClient::setResponseHeaders
+	 * @uses \Kshabazz\Slib\HttpClient::populateResponseCode
 	 * @interception ignore-example-com
 	 */
 	public function test_setHeaders()
@@ -48,12 +48,12 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 
 	/**
 	 * @covers ::post
-	 * @uses \Kshabazz\Slib\Http::lastRequest
-	 * @uses \Kshabazz\Slib\Http::__construct
-	 * @uses \Kshabazz\Slib\Http::send
-	 * @uses \Kshabazz\Slib\Http::__destruct
-	 * @uses \Kshabazz\Slib\Http::setResponseHeaders
-	 * @uses \Kshabazz\Slib\Http::populateResponseCode
+	 * @uses \Kshabazz\Slib\HttpClient::lastRequest
+	 * @uses \Kshabazz\Slib\HttpClient::__construct
+	 * @uses \Kshabazz\Slib\HttpClient::send
+	 * @uses \Kshabazz\Slib\HttpClient::__destruct
+	 * @uses \Kshabazz\Slib\HttpClient::setResponseHeaders
+	 * @uses \Kshabazz\Slib\HttpClient::populateResponseCode
 	 * @interception ignore-test-valid-post-data
 	 */
 	public function test_setting_valid_post_data()
