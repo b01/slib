@@ -161,17 +161,17 @@ class HttpClient
 		// Set the request headers.
 		$context = \stream_context_create([ 'http' => $this->lastRequest ]);
 		// Make the request.
-		$fh = \fopen( $this->url, 'r', FALSE, $context );
+		$resource = \fopen( $this->url, 'r', FALSE, $context );
 		// Get information regarding the request.
-		$this->metaData = \stream_get_meta_data( $fh );
+		$this->metaData = \stream_get_meta_data( $resource );
 		// Populate the response headers.
 		$this->setResponseHeaders( $this->metaData );
 		$this->populateResponseCode();
 		// Set the response body.
-		$this->responseContent = \stream_get_contents( $fh );
-
+		$this->responseContent = \stream_get_contents( $resource );
 		// Release the resource handle.
-		\fclose( $fh );
+		\fclose( $resource );
+		$resource = NULL;
 		return TRUE;
 	}
 

@@ -33,7 +33,7 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
 	 * @uses \Kshabazz\Slib\HttpClient::__destruct
 	 * @uses \Kshabazz\Slib\HttpClient::setResponseHeaders
 	 * @uses \Kshabazz\Slib\HttpClient::populateResponseCode
-	 * @interception ignore-example-com
+	 * @interception www-example-com
 	 */
 	public function test_setHeaders()
 	{
@@ -77,7 +77,7 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @interception ignore-example-com
+	 * @interception www-example-com
 	 */
 	public function test_getting_response_headers()
 	{
@@ -88,7 +88,7 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @interception ignore-example-com
+	 * @interception www-example-com
 	 */
 	public function test_response_code()
 	{
@@ -99,7 +99,7 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @interception test-response-code-null
+	 * @interception response-code-null
 	 */
 	public function test_response_code_null()
 	{
@@ -119,7 +119,7 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @interception ignore-example-com
+	 * @interception www-example-com
 	 */
 	public function test_getting_response_body()
 	{
@@ -139,7 +139,7 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @interception ignore-example-com
+	 * @interception www-example-com
 	 */
 	public function test_setting_a_header()
 	{
