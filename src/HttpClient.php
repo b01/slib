@@ -35,6 +35,8 @@ class HttpClient
 		$responseContent,
 		/** @var array Response headers. */
 		$responseHeaders,
+		/** @var array */
+		$sslOptions,
 		/** @var string URL of the request. */
 		$url;
 
@@ -52,6 +54,7 @@ class HttpClient
 		$this->responseCode = NULL;
 		$this->responseContent = NULL;
 		$this->responseHeaders = NULL;
+		$this->ssl = NULL;
 		$this->url = NULL;
 	}
 
@@ -158,8 +161,13 @@ class HttpClient
 			'header' => \implode( "\r\n", $this->requestHeaders ) . "\r\n",
 			'content' => $this->requestContent
 		];
+		$contextOptions = [ 'http' => $this->lastRequest ];
+		if ( \is_array($this->sslOptions) )
+		{
+			$contextOptions[ 'ssl' ] = $this->sslOptions;
+		}
 		// Set the request headers.
-		$context = \stream_context_create([ 'http' => $this->lastRequest ]);
+		$context = \stream_context_create( $contextOptions );
 		// Make the request.
 		$resource = \fopen( $this->url, 'r', FALSE, $context );
 		// Get information regarding the request.
@@ -209,6 +217,16 @@ class HttpClient
 	{
 		$this->requestHeaders = $pHeaders;
 		return $this;
+	}
+
+	/**
+	 * Set SSL options.
+	 *
+	 * @param array $pOptions
+	 */
+	public function setSslOptions( array $pOptions )
+	{
+		$this->sslOptions = $pOptions;
 	}
 
 	/**

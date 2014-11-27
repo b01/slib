@@ -11,12 +11,15 @@ use \Kshabazz\Slib\HttpClient;
 class HttpClientTest extends \PHPUnit_Framework_TestCase
 {
 	private
+		/** @var \Kshabazz\Slib\HttpClient */
+		$httpClient,
 		/** @var string */
 		$url;
 
 	public function setUp()
 	{
 		$this->url = 'http://www.example.com';
+		$this->httpClient = new HttpClient();
 	}
 
 	public function test_initialization()
@@ -164,6 +167,21 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
 			$expected = 'Undefined property: Kshabazz\Slib\HttpClient::$metaData';
 			$this->assertContains( $expected, $pError->getMessage() );
 		}
+	}
+
+	/**
+	 * @interception ssl-www-example-com
+	 */
+	public function test_setting_ssl()
+	{
+		$expected = 'test: 1234';
+		$this->httpClient->setRequestHeader( $expected );
+		$this->httpClient->setSslOptions([
+			'verify_peer_name' => FALSE,
+		]);
+		$this->httpClient->send( 'https://www.example.com/' );
+		$requestHeader = $this->httpClient->lastRequest()[ 'header' ];
+		$this->assertContains( $expected, $requestHeader );
 	}
 }
 ?>
