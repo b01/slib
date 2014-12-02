@@ -28,8 +28,7 @@
 		}
 	],
 	"require": {
-		"php": ">=5.5.10",
-		"ext-curl": "*"
+		"php": ">=5.5.10"
 	},
 	"require-dev": {
 		"phpunit/phpunit": ">=3.7",
