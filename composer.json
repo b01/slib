@@ -28,11 +28,10 @@
 		}
 	],
 	"require": {
-		"php": ">=5.5.10"
+		"php": "~5.5.10"
 	},
 	"require-dev": {
-		"phpunit/phpunit": ">=3.7",
-		"squizlabs/php_codesniffer": ">=1.0",
+		"phpunit/phpunit": "~4",
 		"kshabazz/interception": "dev-master"
 	}
 }
