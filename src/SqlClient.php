@@ -5,13 +5,13 @@
  */
 
 /**
- * Class Sql
+ * Class SqlClient
  *
  * @package Kshabazz\Slib
  */
-class Sql
+class SqlClient
 {
-	private
+	protected
 		/** @var \PDO Database PDO handle. */
 		$pdo,
 		/** @var string Client IP address. */
@@ -82,7 +82,7 @@ class Sql
 		}
 		catch ( \Exception $pError )
 		{
-		    logError( $pError, 'Sql::pdoQuery: Failed to run PDO statement on\n\tin %s on line %s",' );
+		    logError( $pError, 'SqlClient::pdoQuery: Failed to run PDO statement on\n\tin %s on line %s",' );
 			// Friendly message to the user.
 			throw new \Exception( 'A PDO Error has occurred.' );
 		}
