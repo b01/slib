@@ -1,5 +1,5 @@
 before_install:
-  - mysql -e "create database IF NOT EXISTS test;" -uroot
+  - mysql < tests/fixtures/mysql-test-setup.sql -uroot
 
 before_script:
  - composer install
