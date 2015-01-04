@@ -82,9 +82,8 @@ class SqlClient
 		}
 		catch ( \Exception $pError )
 		{
-		    logError( $pError, 'SqlClient::pdoQuery: Failed to run PDO statement on\n\tin %s on line %s",' );
 			// Friendly message to the user.
-			throw new \Exception( 'A PDO Error has occurred.' );
+			throw new \Exception( 'A PDO Error has occurred: ' . $pError->getMessage() );
 		}
 		return $returnValue;
 	}
