@@ -19,7 +19,7 @@ class SqlClientTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->pdo = new \PDO(
 			'mysql:host=localhost;dbname=test;charset=utf8',
-			'travis',
+			'root',
 			'',
 			[ // Show human readable errors from the database server when they occur.
 			  \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
