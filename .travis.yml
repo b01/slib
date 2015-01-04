@@ -7,3 +7,6 @@ php:
  - 5.6
  - 5.5
  - 5.4
+
+services:
+ - mysql -e 'create database IF NOT EXISTS test;' -uroot
