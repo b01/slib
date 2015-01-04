@@ -284,5 +284,4 @@ function camelCase( $pString, $upperCaseFirst = FALSE )
 		}
 		echo "\n";
 	}
-
-// Writing below this line can cause headers to be sent before intended ?>
+?>
