@@ -13,12 +13,14 @@ use Kshabazz\Slib\SqlClient;
  */
 class SqlClientTest extends \PHPUnit_Framework_TestCase
 {
-	private $pdo;
+	private
+		$pdo,
+		$table;
 
 	public function setUp()
 	{
 		$this->pdo = new \PDO(
-			'mysql:host=localhost;dbname=slib_test;charset=utf8',
+			'mysql:host=localhost;dbname=test;charset=utf8',
 			'root',
 			'',
 			[ // Show human readable errors from the database server when they occur.
@@ -27,6 +29,7 @@ class SqlClientTest extends \PHPUnit_Framework_TestCase
 			  \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
 			]
 		);
+		$this->table = 'slib_test';
 	}
 
 	/**
@@ -48,9 +51,9 @@ class SqlClientTest extends \PHPUnit_Framework_TestCase
 	{
 		$sql = new SqlClient( $this->pdo );
 		$column1Value = 'test column 1';
-		$truncateStmt = $sql->pdo()->prepare( 'TRUNCATE TABLE `test_1`' );
-		$insertStmt = $sql->pdo()->prepare( "INSERT INTO `test_1` (`column1`) VALUES('{$column1Value}');" );
-		$selectStmt = $sql->pdo()->prepare( 'SELECT `id`, `column1` FROM `test_1`' );
+		$truncateStmt = $sql->pdo()->prepare( "TRUNCATE TABLE `{$this->table}`" );
+		$insertStmt = $sql->pdo()->prepare( "INSERT INTO `{$this->table}` (`column1`) VALUES('{$column1Value}');" );
+		$selectStmt = $sql->pdo()->prepare( "SELECT `id`, `column1` FROM `{$this->table}`" );
 
 		// clear any data out of the table.
 		$sql->pdoQuery( $truncateStmt, FALSE );
@@ -72,7 +75,7 @@ class SqlClientTest extends \PHPUnit_Framework_TestCase
 	{
 		$sql = new SqlClient( $this->pdo );
 		// invalid column name given.
-		$selectStmt = $sql->pdo()->prepare( "SELECT `column1` FROM `test_1` WHERE `id` = :id" );
+		$selectStmt = $sql->pdo()->prepare( "SELECT `column1` FROM `{$this->table}` WHERE `id` = :id" );
 		// run invalid query that should cause an error.
 		$sql->pdoQuery( $selectStmt );
 
@@ -87,9 +90,9 @@ class SqlClientTest extends \PHPUnit_Framework_TestCase
 	{
 		$sql = new SqlClient(  $this->pdo );
 		$column1Value = 'test column 1';
-		$truncateStmt = $sql->pdo()->prepare( 'TRUNCATE TABLE `test_1`' );
-		$insertStmt = $sql->pdo()->prepare( "INSERT INTO `test_1` (`column1`) VALUES('{$column1Value}');" );
-		$selectQuery = 'SELECT `id`, `column1` FROM `test_1`';
+		$truncateStmt = $sql->pdo()->prepare( "TRUNCATE TABLE `{$this->table}`" );
+		$insertStmt = $sql->pdo()->prepare( "INSERT INTO `{$this->table}` (`column1`) VALUES('{$column1Value}');" );
+		$selectQuery = "SELECT `id`, `column1` FROM `{$this->table}`";
 
 		// clear any data out of the table.
 		$sql->pdoQuery( $truncateStmt, FALSE );
@@ -109,7 +112,7 @@ class SqlClientTest extends \PHPUnit_Framework_TestCase
 	public function test_invalid_use_of_select_method()
 	{
 		$sql = new SqlClient(  $this->pdo );
-		$selectQuery = 'SELECT `id`, `column1` FROM `test_1` WHERE `id` = ?';
+		$selectQuery = "SELECT `id`, `column1` FROM `{$this->table}` WHERE `id` = ?";
 		// retrieve the test data.
 		$sql->select( $selectQuery );
 		$this->fail( 'No exception thrown like expected.' );
@@ -122,15 +125,15 @@ class SqlClientTest extends \PHPUnit_Framework_TestCase
 	{
 		$sql = new SqlClient( $this->pdo );
 		$column1Val = 'test column 1';
-		$sql->pdo()->prepare( 'TRUNCATE TABLE `test_1`' );
+		$sql->pdo()->prepare( 'TRUNCATE TABLE `{$this->table}`' );
 		$sql->pdoQueryBind(
-			"INSERT INTO `test_1` (`column1`) VALUES('{:column1Val}');",
+			"INSERT INTO `{$this->table}` (`column1`) VALUES('{:column1Val}');",
 			[
 				'column1Val' => [ $column1Val, \PDO::PARAM_STR ]
 			]
 		);
 		// retrieve the test data and assert.
-		$results = $sql->pdoQueryBind( 'SELECT `id`, `column1` FROM `test_1`' );
+		$results = $sql->pdoQueryBind( "SELECT `id`, `column1` FROM `{$this->table}`" );
 		$this->assertEquals( $column1Val, $results[0]['column1'], 'Invalid results returned.' );
 	}
 
@@ -145,7 +148,7 @@ class SqlClientTest extends \PHPUnit_Framework_TestCase
 		$sql = new SqlClient( $this->pdo );
 		$column1Val = 'test column 1';
 		// retrieve the test data and assert.
-		$results = $sql->pdoQueryBind( 'SELECT `id`, `column1` FROM `test_1` WHERE `id` = ?' );
+		$results = $sql->pdoQueryBind( "SELECT `id`, `column1` FROM `{$this->table}` WHERE `id` = ?" );
 		$this->assertEquals( $column1Val, $results[0]['column1'], 'Invalid results returned.' );
 	}
 }
