@@ -37,7 +37,7 @@ class FunctionTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_check_valid_php_version_function()
 	{
-		$requirementMet = \Kshabazz\Slib\checkPhpVersion( 5, 5, 3 );
+		$requirementMet = \Kshabazz\Slib\checkPhpVersion( 5, 4, 3 );
 		$this->assertTrue( $requirementMet, 'Requirements were not met, checkPhpVersion failed.' );
 	}
 
