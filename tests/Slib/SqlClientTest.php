@@ -18,7 +18,7 @@ class SqlClientTest extends \PHPUnit_Framework_TestCase
 	public function setUp()
 	{
 		$this->pdo = new \PDO(
-			'mysql:host=localhost;dbname=test;charset=utf8',
+			'mysql:host=localhost;dbname=slib_test;charset=utf8',
 			'root',
 			'',
 			[ // Show human readable errors from the database server when they occur.
