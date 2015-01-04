@@ -18,9 +18,9 @@ class SqlClientTest extends \PHPUnit_Framework_TestCase
 	public function setUp()
 	{
 		$this->pdo = new \PDO(
-			'mysql:host=127.0.0.1;dbname=test;charset=utf8',
-			'testuser',
-			'test1234',
+			'mysql:host=localhost;dbname=test;charset=utf8',
+			'travis',
+			'',
 			[ // Show human readable errors from the database server when they occur.
 			  \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
 			  \PDO::ATTR_EMULATE_PREPARES => FALSE,
