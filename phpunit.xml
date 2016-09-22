@@ -15,19 +15,22 @@
 		</whitelist>
 	</filter>
 	<listeners>
-		<listener class="\Kshabazz\Interception\InterceptionListener">
-			<arguments>
-				<string>Http</string>
-				<string>FIXTURES_PATH</string>
-				<array>
-					<element>
-						<string>http</string>
-					</element>
-					<element>
-						<string>https</string>
-					</element>
-				</array>
-			</arguments>
-		</listener>
+	<listener class="\Kshabazz\Interception\InterceptionListener">
+		<arguments>
+			<!-- The first parameter must be the Interception class that will handle to protocol. -->
+			<string>\Kshabazz\Interception\StreamWrappers\Http</string>
+			<!-- The second parameter can be a path or a constant that is set to a path. -->
+			<string>FIXTURES_PATH</string>
+			<!-- The third parameter should list the protocols to handle. -->
+			<array>
+				<element>
+					<string>http</string>
+				</element>
+				<element>
+					<string>https</string>
+				</element>
+			</array>
+		</arguments>
+	</listener>
 	</listeners>
 </phpunit>

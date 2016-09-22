@@ -43,16 +43,14 @@ class FunctionTest extends \PHPUnit_Framework_TestCase
 
 	/**
 	 * Check PHP version
+     * @expectedException \Exception
+     * @expectedExceptionMessage You'll need to upgrade
 \	 */
 	public function test_check_invalid_php_version_function()
 	{
-		$phpVersion = phpversion();
-		$this->setExpectedException(
-			'Exception',
-			"Your PHP version is '{$phpVersion}'. The minimum required PHP version is '6.6.4'. You'll need to upgrade in order to use this application."
-		);
-		\Kshabazz\Slib\checkPhpVersion( 6, 6, 4 );
-		$this->fail( 'No \Exception throw as expected.' );
+		$phpVersion = \phpversion();
+        $phpVer = explode('.', $phpVersion);
+		\Kshabazz\Slib\checkPhpVersion( ($phpVer[0] + 1), $phpVer[1], $phpVer[2] );
 	}
 
 	/**

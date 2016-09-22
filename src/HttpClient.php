@@ -106,6 +106,7 @@ class HttpClient
 		$this->requestHeaders[ 'content-type' ] = self::CONTENT_TYPE_POST;
 		// Set post data.
 		$this->requestContent = \http_build_query( $pPostData, '&' );
+
 		return $this->send( $pUrl );
 	}
 

@@ -46,14 +46,6 @@ class SqlClient
 	}
 
 	/**
-	 * Get the PDO object.
-	 */
-	public function pdo()
-	{
-		return $this->pdo;
-	}
-
-	/**
 	 * Run a query statement as a prepared PDO statement. Optionally returns the result.
 	 *
 	 * @param string $pStmt PDO statement
@@ -67,7 +59,7 @@ class SqlClient
 		try
 		{
 			// Call the database routine
-			$returnValue = $pStmt->execute();
+            $returnValue = $pStmt->execute();
 
 			if ( $returnValue && $pReturnResults )
 			{
@@ -85,6 +77,7 @@ class SqlClient
 			// Friendly message to the user.
 			throw new \Exception( 'A PDO Error has occurred: ' . $pError->getMessage() );
 		}
+
 		return $returnValue;
 	}
 
