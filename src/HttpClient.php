@@ -207,9 +207,8 @@ class HttpClient
 
 	/**
 	 * Set request headers, removing any previously set request headers.
-
 	 *
-*@example setRequestHeaders([ "content-type: text/html; charset=utf-8\r\n" ]);f
+     * @example setRequestHeaders([ "content-type: text/html; charset=utf-8\r\n" ]);f
 	 * @param array $pHeaders
 	 * @return HttpClient
 	 * @throws \InvalidArgumentException
@@ -233,26 +232,30 @@ class HttpClient
 	/**
 	 * Get the HTTP response code of the request.
 	 *
-	 * @return int HTTP response code.
+	 * @return $this
 	 * @throws \Exception
 	 */
 	private function populateResponseCode()
-	{
-		$hasStatus = \preg_match( '#HTTP/... (\d+) .*$#', $this->responseHeaders[0], $results );
-		if ( $hasStatus )
-		{
-			$this->responseCode = ( int ) $results[ 1 ];
-		}
-		return $this;
-	}
+    {
+        $hasStatus = \preg_match('#HTTP/... (\d+) .*$#', $this->responseHeaders[ 0 ], $results);
 
+        if ($hasStatus) {
+            $this->responseCode = ( int )$results[ 1 ];
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param $metaData
+     * @throws \Exception
+     */
 	private function setResponseHeaders( $metaData )
-	{
-		if ( !\is_array($metaData) || !\array_key_exists('wrapper_data', $metaData) )
-		{
-			throw new \Exception( 'No response headers are set!' );
-		}
-		$this->responseHeaders = $metaData[ 'wrapper_data' ];
-	}
+    {
+        if (!\is_array($metaData) || !\array_key_exists('wrapper_data', $metaData)) {
+            throw new \Exception('No response headers are set!');
+        }
+        $this->responseHeaders = $metaData[ 'wrapper_data' ];
+    }
 }
 ?>

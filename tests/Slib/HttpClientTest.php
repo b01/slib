@@ -67,20 +67,6 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::post
-     * @uses \Kshabazz\Slib\HttpClient::__construct
-     * @uses \Kshabazz\Slib\HttpClient::__destruct
-     * @expectedException \TypeError
-     * @expectedExceptionMessage must be of the type array
-     */
-    public function test_setting_invalid_post_data()
-    {
-        $testCase = 'test 1234';
-        $Request = new HttpClient();
-        $Request->post($this->url, $testCase);
-    }
-
-    /**
      * @interception www-example-com
      */
     public function test_getting_response_headers()

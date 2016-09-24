@@ -58,7 +58,7 @@ class SqlClient
     /**
      * Run a query statement as a prepared PDO statement. Optionally returns the result.
      *
-     * @param string $pStmt PDO statement
+     * @param \PDOStatement $pStmt PDO statement
      * @param bool $pReturnResults TRUE to return the results, or FALSE not to.
      * @throws \Exception
      * @return mixed
@@ -73,15 +73,16 @@ class SqlClient
 
             if ($returnValue && $pReturnResults) {
                 // Fetch all rows into an array.
-                $rows = $pStmt->fetchAll(\PDO::FETCH_ASSOC);
+                $rows = $pStmt->fetchAll(PDO::FETCH_ASSOC);
+
                 if (isArray($rows)) {
                     $returnValue = $rows;
                 }
             }
 
             $pStmt->closeCursor();
-        } catch (\Exception $pError) {
-            throw new \Exception('A PDO Error has occurred: ' . $pError->getMessage());
+        } catch (Exception $pError) {
+            throw new Exception('A PDO Error has occurred: ' . $pError->getMessage());
         }
 
         return $returnValue;

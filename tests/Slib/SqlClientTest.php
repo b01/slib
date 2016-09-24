@@ -30,6 +30,13 @@ class SqlClientTest extends \PHPUnit_Framework_TestCase
         $this->table = 'slib_test';
     }
 
+    public function tearDown()
+    {
+        $this->mockPdo = null;
+        $this->mockStmt = null;
+        unset($this->table);
+    }
+
     /**
      * @covers ::ipAddress
      * @uses \Kshabazz\Slib\SqlClient::__construct
@@ -60,6 +67,8 @@ class SqlClientTest extends \PHPUnit_Framework_TestCase
         $actual = $sql->pdoQuery($this->mockStmt, false);
 
         $this->assertEquals($fixture, $actual);
+
+        $sql = null;
     }
 
     /**
@@ -105,7 +114,7 @@ class SqlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test select data from the DB.
+     * @covers ::select
      */
     public function test_select_method()
     {
