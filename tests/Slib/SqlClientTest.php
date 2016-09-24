@@ -10,6 +10,8 @@ use PDOStatement;
  *
  * @package \Kshabazz\Test\Slib
  * @coversDefaultClass \Kshabazz\Slib\SqlClient
+ * @backupGlobals disabled
+ * @backupStaticAttributes disabled
  */
 class SqlClientTest extends \PHPUnit_Framework_TestCase
 {
