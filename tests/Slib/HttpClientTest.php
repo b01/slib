@@ -1,4 +1,4 @@
-<?php namespace Kshabazz\Test\Slib;
+<?php namespace Kshabazz\Tests\Slib;
 
 use \Kshabazz\Slib\HttpClient;
 
@@ -8,7 +8,7 @@ use \Kshabazz\Slib\HttpClient;
  * @package \Kshabazz\Test\Slib
  * @coversDefaultClass \Kshabazz\Slib\HttpClient
  */
-class HttpClientTest extends \PHPUnit_Framework_TestCase
+class HttpClientTest extends \PHPUnit\Framework\TestCase
 {
     private /** @var \Kshabazz\Slib\HttpClient */
         $httpClient, /** @var string */

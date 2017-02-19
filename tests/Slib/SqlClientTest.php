@@ -1,4 +1,4 @@
-<?php namespace Kshabazz\Test\Slib;
+<?php namespace Kshabazz\Slib\Tests;
 
 use Exception;
 use Kshabazz\Slib\SqlClient;
@@ -13,7 +13,7 @@ use PDOStatement;
  * @backupGlobals disabled
  * @backupStaticAttributes disabled
  */
-class SqlClientTest extends \PHPUnit_Framework_TestCase
+class SqlClientTest extends \PHPUnit\Framework\TestCase
 {
     private
         /** @var \PDO|\PHPUnit_Framework_MockObject_MockObject */
