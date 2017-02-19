@@ -1,7 +1,7 @@
 # Directories
 # -----------
 /.idea/
-./phpunit/
+/.phpunit/
 /nbproject/
 /private/
 /vendor/
