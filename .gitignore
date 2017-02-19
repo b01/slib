@@ -13,4 +13,4 @@
 /composer.bat
 /composer.lock
 /save-test-file.txt
-/tests/fixtures/ignore-*
+/test/fixtures/ignore-*

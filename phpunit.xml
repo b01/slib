@@ -3,19 +3,20 @@
          beStrictAboutChangesToGlobalState="true"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTestsThatDoNotTestAnything="true"
-         bootstrap="tests/bootstrap.php"
+         bootstrap="test/phpunit.php"
          colors="auto"
          forceCoversAnnotation="true"
          mapTestClassNameToCoveredClassName="true"
          verbose="true">
     <testsuites>
         <testsuite name="All">
-            <directory>tests</directory>
+            <directory>test</directory>
         </testsuite>
     </testsuites>
     <filter>
         <blacklist>
             <directory>.</directory>
+            <exclude>test/Slib/HttpClientTest.php</exclude>
         </blacklist>
         <whitelist>
             <directory suffix=".php">src</directory>
