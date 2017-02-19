@@ -1,36 +1,48 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<phpunit bootstrap="tests/bootstrap.php"
-		 strict="true">
-	<testsuites>
-		<testsuite name="All">
-			<directory>tests</directory>
-		</testsuite>
-	</testsuites>
-	<filter>
-		<blacklist>
-			<directory>.</directory>
-		</blacklist>
-		<whitelist>
-			<directory suffix=".php">src</directory>
-		</whitelist>
-	</filter>
-	<listeners>
-	<listener class="\Kshabazz\Interception\InterceptionListener">
-		<arguments>
-			<!-- The first parameter must be the Interception class that will handle to protocol. -->
-			<string>\Kshabazz\Interception\StreamWrappers\Http</string>
-			<!-- The second parameter can be a path or a constant that is set to a path. -->
-			<string>FIXTURES_PATH</string>
-			<!-- The third parameter should list the protocols to handle. -->
-			<array>
-				<element>
-					<string>http</string>
-				</element>
-				<element>
-					<string>https</string>
-				</element>
-			</array>
-		</arguments>
-	</listener>
-	</listeners>
+<phpunit backupStaticAttributes="false"
+         beStrictAboutChangesToGlobalState="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         bootstrap="tests/bootstrap.php"
+         colors="auto"
+         forceCoversAnnotation="true"
+         mapTestClassNameToCoveredClassName="true"
+         verbose="true">
+    <testsuites>
+        <testsuite name="All">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <blacklist>
+            <directory>.</directory>
+        </blacklist>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="true" />
+        <log type="coverage-clover" target=".phpunit/coverage.xml" />
+        <log type="junit" target=".phpunit/junit.xml" />
+    </logging>
+    <listeners>
+        <listener class="\Kshabazz\Interception\InterceptionListener">
+            <arguments>
+                <!-- The first parameter must be the Interception class that will handle to protocol. -->
+                <string>\Kshabazz\Interception\StreamWrappers\Http</string>
+                <!-- The second parameter can be a path or a constant that is set to a path. -->
+                <string>FIXTURES_PATH</string>
+                <!-- The third parameter should list the protocols to handle. -->
+                <array>
+                    <element>
+                        <string>http</string>
+                    </element>
+                    <element>
+                        <string>https</string>
+                    </element>
+                </array>
+            </arguments>
+        </listener>
+    </listeners>
 </phpunit>
