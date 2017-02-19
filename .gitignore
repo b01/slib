@@ -1,11 +1,16 @@
+# Directories
+# -----------
+/.idea/
+./phpunit/
+/nbproject/
+/private/
+/vendor/
+
+# Files
+# -----
 .htaccess
-.idea/
-.user.ini
-composer.bat
-composer.lock
-composer.phar
-coverage-output
-private/
-save-test-file.txt
-vendor/
-tests/fixtures/ignore-*
+/.user.ini
+/composer.bat
+/composer.lock
+/save-test-file.txt
+/tests/fixtures/ignore-*
