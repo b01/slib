@@ -114,15 +114,15 @@ trait JsonModel
     {
         $aType = gettype($value);
         if ($aType !== $type) {
-            throw new JtpException(
-                JtpException::BAD_PROPERTY_TYPE,
+            throw new JsonModelException(
+                JsonModelException::BAD_PROPERTY_TYPE,
                 [$property, $type, $aType]
             );
         }
 
         if ($value === null) {
-            throw new JtpException(
-                JtpException::PROPERTY_EMPTY,
+            throw new JsonModelException(
+                JsonModelException::PROPERTY_EMPTY,
                 [$class, $property, $aType]
             );
         }

@@ -1,7 +1,7 @@
 <?php namespace Kshabazz\Slib\Tests;
 
 use Kshabazz\Slib\JsonModel;
-use Kshabazz\Slib\JtpException;
+use Kshabazz\Slib\JsonModelException;
 use Kshabazz\Slib\Tests\Mocks\ModelT;
 
 /**
@@ -36,8 +36,8 @@ class JsonModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testCanInvalidateProperty()
     {
-        $this->expectException(JtpException::class);
-        $this->expectExceptionCode(JtpException::PROPERTY_EMPTY);
+        $this->expectException(JsonModelException::class);
+        $this->expectExceptionCode(JsonModelException::PROPERTY_EMPTY);
 
         $this->model->validateProperty('test', 'NULL', null);
     }
@@ -47,8 +47,8 @@ class JsonModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testCanInvalidatePropertyType()
     {
-        $this->expectException(JtpException::class);
-        $this->expectExceptionCode(JtpException::BAD_PROPERTY_TYPE);
+        $this->expectException(JsonModelException::class);
+        $this->expectExceptionCode(JsonModelException::BAD_PROPERTY_TYPE);
 
         $this->model->validateProperty('test', 'integer', '1');
     }
