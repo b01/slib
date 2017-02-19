@@ -14,7 +14,7 @@ class StringsTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->strings = $this->buildTraitMok(Strings::class);
+        $this->strings = $this->getMockForTrait(Strings::class);
 	}
 
 	/**

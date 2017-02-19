@@ -14,6 +14,6 @@ class ConfigurationTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->configuration = $this->buildMockForTrait(Configuration::class);
+        $this->configuration = $this->getMockForTrait(Configuration::class);
     }
 }

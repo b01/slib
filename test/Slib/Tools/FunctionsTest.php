@@ -17,10 +17,11 @@ class FunctionsTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->functions = $this->buildTraitMok(Functions::class);
+        $this->functions = $this->getMockForTrait(Functions::class);
 
 		$this->fixtures = FIXTURES_PATH . DIRECTORY_SEPARATOR;
 	}
+
 	/**
 	 * Test includeContents.
 	 */
@@ -121,7 +122,7 @@ class FunctionsTest extends \PHPUnit\Framework\TestCase
 		$item1 = $randomNumbers[ 0 ];
 		$item2 = $randomNumbers[ 1 ];
 		$item3 = $randomNumbers[ 2 ];
-        
+
 		$this->assertNotEquals( $item1, $item2, 'Array item 1 and item 2 are equal.' );
 		$this->assertNotEquals( $item1, $item3, 'Array item 1 and item 3 are equal.' );
 		$this->assertNotEquals( $item2, $item3, 'Array item 2 and item 3 are equal.' );

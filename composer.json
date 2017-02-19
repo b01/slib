@@ -13,7 +13,7 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Kshabazz\\Tests\\Slib\\": "test/Slib"
+			"Kshabazz\\Slib\\Tests\\": "test/Slib"
 		}
 	},
 	"description": "A collection of useful functions to aid developing.",

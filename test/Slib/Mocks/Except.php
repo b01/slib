@@ -13,7 +13,7 @@ class Except extends SlibException
 
     const TEST_2 = 2;
 
-    protected $errorMap = [
+    protected static $errorMap = [
         self::TEST_1 => 'no placeholders.',
         self::TEST_1 => '%s',
     ];
