@@ -135,7 +135,7 @@ trait Utilities
      * @throws \Exception
      * @return array of random numbers.
      */
-    function UniqueRandomNumbersWithinRange($pMin, $pMax, $pQuantity)
+    function uniqueRandomNumbersWithinRange($pMin, $pMax, $pQuantity)
     {
         $numbersAry = range($pMin, $pMax);
 
