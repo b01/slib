@@ -66,7 +66,7 @@ trait Utilities
 		$contents = \file_get_contents( $pFile );
 		$returnValue = \json_decode( $contents, true );
 
-		if ( !isArray($returnValue) )
+		if ( !$this->isArray($returnValue) )
 		{
 			$returnValue = [];
 		}
