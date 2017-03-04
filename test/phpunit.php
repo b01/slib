@@ -1,14 +1,12 @@
-<?php
-/**
- * Load files necessary to run test.
- */
+<?php namespace Kshabazz\Slib\Tests;
+
 require_once __DIR__
 	. DIRECTORY_SEPARATOR . '..'
 	. DIRECTORY_SEPARATOR . 'vendor'
 	. DIRECTORY_SEPARATOR . 'autoload.php';
 
-// Set fixture path constant.
-$fixturesPath = realpath( __DIR__ . DIRECTORY_SEPARATOR . 'fixtures' );
-define( 'FIXTURES_PATH', $fixturesPath . DIRECTORY_SEPARATOR );
+const FIXTURES_PATH = __DIR__
+    . DIRECTORY_SEPARATOR . 'fixtures'
+    . DIRECTORY_SEPARATOR;
 
 ?>

@@ -1,6 +1,7 @@
 <?php namespace Kshabazz\Slib\Tests\Tools;
 
 use Kshabazz\Slib\Tools\Utilities;
+use const Kshabazz\Slib\Tests\FIXTURES_PATH;
 
 /**
  * Unit test for trait Functions
