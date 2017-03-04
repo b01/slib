@@ -59,20 +59,20 @@ class FunctionsTest extends \PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * Test loadJsonFile.
+	 * Test loadJsonAsArray.
 	 */
-	public function test_loadJsonFile_function()
+	public function testLoadJsonAsArrayUtility()
 	{
-		$ary = $this->functions->loadJsonFile( $this->fixtures . 'test.json' );
+		$ary = $this->functions->loadJsonAsArray( $this->fixtures . 'test.json' );
 		$this->assertEquals( '1234', $ary['test'], 'Could not load JSON data from test file.' );
 	}
 
 	/**
-	 * Test fail of loadJsonFile.
+	 * Test fail of loadJsonAsArray.
 	 */
-	public function test_fail_of_loadJsonFile_function()
+	public function testWillFailToLoadJsonAsArrayWithEmptyJson()
 	{
-		$ary = $this->functions->loadJsonFile( $this->fixtures . 'empty.json' );
+		$ary = $this->functions->loadJsonAsArray( $this->fixtures . 'empty.json' );
 		$this->assertEquals( 0, \count($ary), 'Unexpected data loaded from empty JSON test file.' );
 	}
 

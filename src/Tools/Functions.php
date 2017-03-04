@@ -58,7 +58,7 @@ class Functions
 	 * @throw \Exception
 	 * @return array
 	 */
-	function loadJsonFile( $pFile )
+	function loadJsonAsArray( $pFile )
 	{
 		$contents = \file_get_contents( $pFile );
 		$returnValue = \json_decode( $contents, true );
