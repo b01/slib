@@ -19,7 +19,7 @@ class ModelT
 
     /**
      *
-     * @var \Jtp\Tests\Mocks\MakeT;
+     * @var \Kshabazz\Slib\Tests\Mocks\MakeT;
      */
     private $makeT;
 
@@ -38,7 +38,7 @@ class ModelT
 
     /**
      *
-     * @return \Jtp\Tests\Mocks\MakeT
+     * @return \Kshabazz\Slib\Tests\Mocks\MakeT
      */
     public function getMakeT()
     {
@@ -54,7 +54,7 @@ class ModelT
     }
 
     /**
-     * @param \Jtp\Tests\Mocks\Engine $engine
+     * @param \Kshabazz\Slib\Tests\Mocks\Engine $engine
      * @return $this
      */
     public function setEngine(Engine $engine)
@@ -69,7 +69,7 @@ class ModelT
     }
 
     /**
-     * @param \Jtp\Tests\Mocks\MakeT $makeT
+     * @param \Kshabazz\Slib\Tests\Mocks\MakeT $makeT
      */
     public function setMakeT(MakeT $makeT)
     {
