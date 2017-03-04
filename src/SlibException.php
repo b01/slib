@@ -8,11 +8,18 @@ use Exception;
 abstract class SlibException extends Exception
 {
     /**
+     * Generic error code.
+     */
+    const UNKNOWN = 1;
+
+    /**
      * List of error codes and their corresponding messages.
      *
      * @var array
      */
-    protected static $errorMap = [];
+    protected static $errorMap = [
+        self::UNKNOWN => 'An unknown errors has occurred.',
+    ];
 
     /**
      * Constructor
