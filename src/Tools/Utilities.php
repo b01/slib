@@ -7,7 +7,7 @@
 /**
  * Description of Functions
  */
-class Functions
+trait Utilities
 {
 	/**
 	 * Capture the output of an include statement.
@@ -18,15 +18,18 @@ class Functions
 	 */
 	function includeContents( $pFilename )
 	{
+	    $returnValue = false;
+
 		if ( \is_file($pFilename) )
 		{
 			\ob_start();
+
 			include $pFilename;
 
-			return \ob_get_clean();
+            $returnValue = \ob_get_clean();
 		}
 
-		return false;
+		return $returnValue;
 	}
 
 	/**

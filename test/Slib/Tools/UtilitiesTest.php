@@ -1,13 +1,13 @@
 <?php namespace Kshabazz\Slib\Tests\Tools;
 
-use Kshabazz\Slib\Tools\Functions;
+use Kshabazz\Slib\Tools\Utilities;
 
 /**
  * Unit test for trait Functions
  *
  * @coversDefaultClass \Kshabazz\Slib\Functions
  */
-class FunctionsTest extends \PHPUnit\Framework\TestCase
+class UtilitiesTest extends \PHPUnit\Framework\TestCase
 {
     /** @var \Kshabazz\Slib\Tools\Functions|\PHPUnit\Framework */
     private $functions;
@@ -17,9 +17,9 @@ class FunctionsTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->functions = $this->getMockForTrait(Functions::class);
+        $this->functions = $this->getMockForTrait(Utilities::class);
 
-		$this->fixtures = FIXTURES_PATH . DIRECTORY_SEPARATOR;
+		$this->fixtures = FIXTURES_PATH;
 	}
 
 	/**
