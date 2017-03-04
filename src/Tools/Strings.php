@@ -11,27 +11,21 @@ trait Strings
 {
     /**
      * Convert a dash separated string to lower/upper camel case.
-     * Works great on pretty URLs
+     * Works great on pretty/vanity URLs
      *
      * @param string $pString dash separate word.
      * @param bool $upperCaseFirst switch lower/upper mode of first letter.
      * @return string
      */
-    function camelCase( $pString, $upperCaseFirst = FALSE )
+    function camelCase($pString, $upperCaseFirst = FALSE)
     {
-        if ( $upperCaseFirst )
-        {
-            $regEx = '/(?:^|-)(.?)/';
-        }
-        else
-        {
-            $regEx = '/(?:-)(.?)/';
-        }
-        $filter = function ( $p )
-        {
-            return strtoupper( $p[1] );
+        $regEx = $upperCaseFirst ? '/(?:^|-)(.?)/' : '/(?:-)(.?)/';
+
+        $filter = function ($p) {
+            return strtoupper($p[1]);
         };
-        return preg_replace_callback( $regEx, $filter, $pString );
+
+        return preg_replace_callback($regEx, $filter, $pString);
     }
 
 	/**
@@ -89,12 +83,11 @@ trait Strings
 	 */
 	function convertToClassName( $pString )
 	{
-		// remove any chars unqualified for a class name.
-		$className = \str_replace( '-', '', $pString );
 		// strip off the forward slash and extension.
-		$className = \basename( $className, '.php' );
+		$className = \basename( $pString, '.php' );
+
 		// Camel Case any words left.
-		$className = camelCase( $className, TRUE );
+		$className = $this->camelCase( $className, TRUE );
 
 		return $className;
 	}
