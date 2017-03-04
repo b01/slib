@@ -77,7 +77,7 @@ class SqlClientTest extends \PHPUnit\Framework\TestCase
      * @covers ::pdoQuery
      * @uses \Kshabazz\Slib\SqlClient::__construct
      * @uses \Kshabazz\Slib\SqlClient::__destruct
-     * @uses \Kshabazz\Slib\isArray
+     * @uses \Kshabazz\Slib\Tools\Utilities::isArray
      */
     public function test_can_run_statement_success_with_results()
     {
@@ -170,7 +170,7 @@ class SqlClientTest extends \PHPUnit\Framework\TestCase
      * @uses \Kshabazz\Slib\SqlClient::__construct
      * @uses \Kshabazz\Slib\SqlClient::__destruct
      * @uses \Kshabazz\Slib\SqlClient::pdoQuery
-     * @uses \Kshabazz\Slib\isArray
+     * @uses \Kshabazz\Slib\Tools\Utilities::isArray
      */
     public function test_pdoQueryBind_method()
     {

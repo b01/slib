@@ -1,10 +1,10 @@
 <?php namespace Kshabazz\Slib;
 /**
  * Generic methods for retrieving data from a database.
- *
  */
 
 use Exception;
+use Kshabazz\Slib\Tools\Utilities;
 use PDO;
 use PDOStatement;
 
@@ -15,6 +15,8 @@ use PDOStatement;
  */
 class SqlClient
 {
+    use Utilities;
+
     protected
         /** @var \PDO Database PDO handle. */
         $pdo,
@@ -75,7 +77,7 @@ class SqlClient
                 // Fetch all rows into an array.
                 $rows = $pStmt->fetchAll(PDO::FETCH_ASSOC);
 
-                if (isArray($rows)) {
+                if ($this->isArray($rows)) {
                     $returnValue = $rows;
                 }
             }
@@ -116,7 +118,7 @@ class SqlClient
             $stmt = $this->pdo->prepare($pSqlQuery);
 
             // has to be an array with at least on value.
-            if (isArray($pBindings)) {
+            if ($this->isArray($pBindings)) {
                 foreach ($pBindings as $parameterName => $data) {
                     $stmt->bindValue($parameterName, $data[ 0 ], $data[ 1 ]);
                 }
@@ -149,7 +151,7 @@ class SqlClient
             // Fetch all rows into an array.
             $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-            if (isArray($rows)) {
+            if ($this->isArray($rows)) {
                 $returnValue = $rows;
             }
 
