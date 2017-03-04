@@ -85,11 +85,11 @@ trait Utilities
 	{
 		$returnAry = null;
 
-		if ( isArray($pSource) ) {
+		if ( $this->isArray($pSource) ) {
 			shuffle( $pSource );
 			$slices = array_slice( $pSource, 0, $pQuantity );
 
-			if ( isArray($slices) )
+			if ( $this->isArray($slices) )
 			{
 				$returnAry = $slices[ 0 ];
 			}
