@@ -115,9 +115,9 @@ abstract class HttpService
         try {
             $this->lastResponse = $this->httpClient->send($this->lastRequest);
         } catch (\Exception $error) {
-            throw new SlibException(
-                SlibException::BAD_SERVICE_REQUEST,
-                [__CLASS__, $error->getMessage()]
+            throw new HttpServiceException(
+                HttpServiceException::BAD_SERVICE_REQUEST,
+                [$error->getMessage()]
             );
         }
 

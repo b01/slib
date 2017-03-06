@@ -5,7 +5,7 @@ use Exception;
 /**
  * Class SlibException
  */
-class SlibException extends Exception
+abstract class SlibException extends Exception
 {
     /**
      * Generic error code.
