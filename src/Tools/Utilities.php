@@ -10,6 +10,57 @@
 trait Utilities
 {
     /**
+     * Scrub an entire array of potentially harmful client data with htmlspecialchars.
+     *
+     * @param array $data
+     * @return array
+     */
+    public function cleanArray(array $data)
+    {
+        $cleanedArray = [];
+
+        foreach ($data as $key => $value) {
+            $cleanedArray[$key] = $this->getSafeArray($key, $data);
+        }
+
+        return $cleanedArray;
+    }
+
+    /**
+     * Get a value from an array, returning the default value when not present in the array.
+     *
+     * @param string $key
+     * @param array $data
+     * @param string|null $default
+     * @return mixed|null
+     */
+    public function getFromArray(string $key, array $data, string $default = null)
+    {
+        $value = $default;
+
+        if (\array_key_exists($key, $data)) {
+            $value = $data[$key];
+        }
+
+        return $value;
+    }
+
+    /**
+     * Get a value from an array, returning the default value when not present in the array, and stripping HTML tags.
+     *
+     * @param string $key
+     * @param array $data
+     * @param string|null $default
+     * @return mixed|null
+     */
+    public function getSafeArray(string $key, array & $data, string $default = null)
+    {
+        $value = $this->getFromArray($key, $data, $default);
+
+        return \htmlspecialchars($value);
+    }
+
+    /**
      * Capture the output of an include statement.
      * Note: Taken from PHP example of include function.
      *
@@ -70,6 +121,35 @@ trait Utilities
         }
 
         return $returnValue;
+    }
+
+    /**
+     * Print the debug backtrace in the following line format.
+     * Format: [className::]functionName( parameters )
+     *
+     * @param array $backtrace Just pass in the output from \debug_backtrace().
+     * @return string
+     */
+    function formatDebugTrace(array $backtrace)
+    {
+        $trace = '';
+
+        foreach ($backtrace as $trace) {
+            $functionName = $traceStr = $trace['function'];
+            $args = \json_encode($trace['args']);
+            $className = empty($trace['class'])
+                ? ''
+                : $traceStr = $trace['class'] . '::' . $traceStr;
+            $parameters = \count($trace['args']) > 0
+                ? '( ' . substr($args, 1, -1) . ' )'
+                : '()';
+
+            $trace .= "\n" . $className . $functionName . $parameters;
+        }
+
+        $trace .= "\n";
+
+        return $trace;
     }
 
     /**
@@ -146,27 +226,5 @@ trait Utilities
         shuffle($numbersAry);
 
         return array_slice($numbersAry, 0, $pQuantity);
-    }
-
-    /**
-     * Print the debug backtrace in the following line format.
-     * Format: [className::]functionName( parameters )
-     */
-    function print_debug_trace()
-    {
-        $backtrace = \debug_backtrace();
-
-        foreach ($backtrace as $trace) {
-            $functionName = $traceStr = $trace['function'];
-            $className = empty($trace['class']) ? '' : $traceStr = $trace['class'] . '::' . $traceStr;
-            $args = \json_encode($trace['args']);
-            if (\count($trace['args']) > 0) {
-                $parameters = '( ' . substr($args, 1, -1) . ' )';
-            } else {
-                $parameters = '()';
-            }
-            echo "\n" . $className . $functionName . $parameters;
-        }
-        echo "\n";
     }
 }

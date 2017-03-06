@@ -10,7 +10,7 @@ use const Kshabazz\Slib\Tests\FIXTURES_PATH;
  */
 class UtilitiesTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var \Kshabazz\Slib\Tools\Utilities|\PHPUnit\Framework\MockObject\MockObject */
+    /** @var \Kshabazz\Slib\Tools\Utilities|\PHPUnit_Framework_MockObject_MockObject */
     private $utilities;
 
     /** @var string */
@@ -22,6 +22,58 @@ class UtilitiesTest extends \PHPUnit\Framework\TestCase
 
 		$this->fixtures = FIXTURES_PATH;
 	}
+
+    /**
+     * @covers ::getFromArray
+     */
+    public function testGetFromArrayWillReturnValueFromArray()
+    {
+        $fixture = ['test' => 1234];
+
+        $actual = $this->utilities->getFromArray('test', $fixture);
+
+        $this->assertEquals(1234, $actual);
+    }
+
+    /**
+     * @covers ::getFromArray
+     */
+    public function testGetFromArrayWillReturnDefaultValueWhenValueIsNotInArray()
+    {
+        $fixture = [];
+
+        $actual = $this->utilities->getFromArray('test', $fixture, 1234);
+
+        $this->assertEquals(1234, $actual);
+    }
+
+    /**
+     * @covers ::getSafeArray
+     * @uses \Kshabazz\Slib\Tools\Utilities::getFromArray
+     */
+    public function testGetSafeArrayWillEncodeHtmlTagsPresent()
+    {
+        $fixture = ['test' => '123<br />567'];
+
+        $actual = $this->utilities->getSafeArray('test', $fixture);
+
+        $this->assertEquals('123&lt;br /&gt;567', $actual);
+    }
+
+    /**
+     * @covers ::cleanArray
+     * @uses \Kshabazz\Slib\Tools\Utilities::getSafeArray
+     * @uses \Kshabazz\Slib\Tools\Utilities::getFromArray
+     */
+    public function testCanCleanSpecialCharsFromArrayElements()
+    {
+        $fixture = ['test' => '123<br />567', 'test2' => '123<script>567'];
+
+        $actual = $this->utilities->cleanArray($fixture);
+
+        $this->assertEquals('123&lt;br /&gt;567', $actual['test']);
+        $this->assertEquals('123&lt;script&gt;567', $actual['test2']);
+    }
 
 	/**
 	 * @covers ::includeContents
