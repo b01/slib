@@ -1,11 +1,13 @@
 <?php namespace Kshabazz\Slib;
 
+use GuzzleHttp\Client;
+
 /**
  * Class HttpService
  *
  * @package \Kshabazz\Slib
  */
-class HttpService
+abstract class HttpService
 {
     /**
      * @var string
@@ -22,18 +24,21 @@ class HttpService
      */
     protected $clientSecret;
 
+    /** @var array Default headers. */
+    protected $defaultHeaders;
+
     /**
      * @var \GuzzleHttp\Client
      */
     protected $httpClient;
 
     /**
-     * @var \GuzzleHttp\Message\Request Information about the last request for debugging.
+     * @var \GuzzleHttp\Psr7\Request Information about the last request for debugging.
      */
     protected $lastRequest;
 
     /**
-     * @var \GuzzleHttp\Message\Response Information about the last response for debugging.
+     * @var \GuzzleHttp\Psr7\Response Information about the last response for debugging.
      */
     protected $lastResponse;
 
@@ -45,20 +50,15 @@ class HttpService
      * @param string $clientId
      * @param string $clientSecret
      */
-    public function __construct(
-        Client $httpClient,
-        $baseUrl,
-        $clientId,
-        $clientSecret
-    ) {
+    public function __construct(Client $httpClient, $baseUrl)
+    {
         $this->httpClient = $httpClient;
         $this->baseUrl = $baseUrl;
-        $this->clientId = $clientId;
-        $this->clientSecret = $clientSecret;
+        $this->defaultHeaders = [];
     }
 
     /**
-     * @return \GuzzleHttp\Message\Request Represents the request headers and body.
+     * @return \GuzzleHttp\Psr7\Request Represents the request headers and body.
      */
     public function getLastRequest()
     {
@@ -66,11 +66,23 @@ class HttpService
     }
 
     /**
-     * @return \GuzzleHttp\Message\Response Represents the response headers and body.
+     * @return \GuzzleHttp\Psr7\Response Represents the response headers and body.
      */
     public function getLastResponse()
     {
         return $this->lastResponse;
+    }
+
+    /**
+     * Set headers to send in every request.
+     *
+     * Previous headers will be overwritten.
+     *
+     * @param array $headers
+     */
+    public function withHeaders(array $headers)
+    {
+        $this->defaultHeaders = $headers;
     }
 
     /**
@@ -81,22 +93,20 @@ class HttpService
      * @param string $body
      * @param array $headers
      * @return null|string Return the response text.
-     * @throws \Venture\RateGrabber\RateGrabberException
+     * @throws \Kshabazz\Slib\SlibException
      */
     protected function send($method, $endpoint = '', array $headers = null, $body = null)
     {
         $this->lastResponse = null;
         $url = $this->baseUrl . $endpoint;
         $headers['content-type'] = 'application/json';
-        $headers['client_id'] = $this->clientId;
-        $headers['client_secret'] = $this->clientSecret;
-        $options = ['headers' => $headers];
+        $options = ['headers' => array_merge($this->defaultHeaders, $headers)];
 
         if (!empty($body)) {
             $options['body'] = $body;
         }
 
-        $this->lastRequest = $this->httpClient->createRequest(
+        $this->lastRequest = $this->httpClient->request(
             $method,
             $url,
             $options
@@ -105,8 +115,8 @@ class HttpService
         try {
             $this->lastResponse = $this->httpClient->send($this->lastRequest);
         } catch (\Exception $error) {
-            throw new RateGrabberException(
-                RateGrabberException::BAD_SERVICE_REQUEST,
+            throw new SlibException(
+                SlibException::BAD_SERVICE_REQUEST,
                 [__CLASS__, $error->getMessage()]
             );
         }

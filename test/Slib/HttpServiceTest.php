@@ -1,19 +1,26 @@
 <?php namespace Kshabazz\Slib\Tests;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
+use Kshabazz\Slib\HttpService;
+use Kshabazz\Slib\Tests\Mocks\MockHttpService;
+
 /**
  * Class HttpServiceTest
  *
  * @package \Kshabazz\Slib\Tests
+ * @coversDefaultClass \Kshabazz\Slib\HttpService
  */
-class HttpServiceTest extends \PHPUnit_Framework_TestCase
+class HttpServiceTest extends \PHPUnit\Framework\TestCase
 {
     /** @var \GuzzleHttp\Client|\PHPUnit_Framework_MockObject_MockObject */
     private $mockHttpClient;
 
-    /** @var \GuzzleHttp\Message\Request|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \GuzzleHttp\Psr7\Request|\PHPUnit_Framework_MockObject_MockObject */
     private $mockRequest;
 
-    /** @var \GuzzleHttp\Message\Response|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \GuzzleHttp\Psr7\Response|\PHPUnit_Framework_MockObject_MockObject */
     private $mockResponse;
 
     public function setUp()
@@ -36,19 +43,19 @@ class HttpServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanInitialize()
     {
-        $service = new MockService($this->mockHttpClient, '', '', '');
+        $service = new MockHttpService($this->mockHttpClient, '', '', '');
 
-        $this->assertInstanceOf(Service::class, $service);
+        $this->assertInstanceOf(HttpService::class, $service);
     }
 
     /**
      * @covers ::send
-     * @uses \Venture\RateGrabber\Service::__construct
+     * @uses \Kshabazz\Slib\HttpService::__construct
      */
     public function testCanSendRequest()
     {
         $this->mockHttpClient->expects($this->once())
-            ->method('createRequest')
+            ->method('request')
             ->willReturn($this->mockRequest);
 
         $this->mockHttpClient->expects($this->once())
@@ -56,7 +63,7 @@ class HttpServiceTest extends \PHPUnit_Framework_TestCase
             ->with($this->mockRequest)
             ->willReturn(1234);
 
-        $service = new MockService($this->mockHttpClient, '', '', '');
+        $service = new MockHttpService($this->mockHttpClient, '', '', '');
 
         $actual = $service->doSend('test', '/testUrl', [], 'test body');
 
@@ -65,13 +72,13 @@ class HttpServiceTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers ::send
-     * @uses \Venture\RateGrabber\Service::__construct
-     * @expectedException \Venture\RateGrabber\RateGrabberException
+     * @uses \Kshabazz\Slib\HttpService::__construct
+     * @expectedException \Kshabazz\Slib\SlibException
      */
     public function testCanCatchExceptionWhenSendBlowsUp()
     {
         $this->mockHttpClient->expects($this->once())
-            ->method('createRequest')
+            ->method('request')
             ->willReturn($this->mockRequest);
 
         $this->mockHttpClient->expects($this->once())
@@ -79,26 +86,26 @@ class HttpServiceTest extends \PHPUnit_Framework_TestCase
             ->with($this->mockRequest)
             ->will($this->throwException(new \Exception('testing')));
 
-        $service = new MockService($this->mockHttpClient, '', '', '');
+        $service = new MockHttpService($this->mockHttpClient, '', '', '');
 
         $service->doSend('test', '/testUrl', [], 'test body');
     }
 
     /**
      * @covers ::getLastRequest
-     * @uses \Venture\RateGrabber\Service::__construct
+     * @uses \Kshabazz\Slib\HttpService::__construct
      */
     public function testCanCatchLastRequest()
     {
         $this->mockHttpClient->expects($this->once())
-            ->method('createRequest')
+            ->method('request')
             ->willReturn($this->mockRequest);
 
         $this->mockHttpClient->expects($this->once())
             ->method('send')
             ->with($this->mockRequest);
 
-        $service = new MockService($this->mockHttpClient, '', '', '');
+        $service = new MockHttpService($this->mockHttpClient, '', '', '');
 
         $service->doSend('test', '/testUrl', [], 'test body');
 
