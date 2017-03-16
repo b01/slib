@@ -99,7 +99,6 @@ abstract class HttpService
     {
         $this->lastResponse = null;
         $url = $this->baseUrl . $endpoint;
-        $headers['content-type'] = 'application/json';
         $options = ['headers' => array_merge($this->defaultHeaders, $headers)];
 
         if (!empty($body)) {
