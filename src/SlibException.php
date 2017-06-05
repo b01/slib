@@ -36,7 +36,7 @@ abstract class SlibException extends Exception
     /**
      * Convert error code to human readable text.
      *
-     * @param numeric & $code
+     * @param mixed & $code
      * @param array $data
      * @return string
      */
