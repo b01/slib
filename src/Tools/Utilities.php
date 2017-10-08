@@ -46,6 +46,23 @@ trait Utilities
     }
 
     /**
+     * @param string $property
+     * @param object $object
+     * @param mixed $default
+     * @return null
+     */
+    public function getFromObject(string $property, $object, $default = null)
+    {
+        $returnValue = $default;
+
+        if (\is_object($object) && \property_exists($object, $property)) {
+            $returnValue = $object->{$property};
+        }
+
+        return $returnValue;
+    }
+
+    /**
      * Get a value from an array, returning the default value when not present in the array, and stripping HTML tags.
      *
      * @param string $key
