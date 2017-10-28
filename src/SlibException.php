@@ -24,10 +24,10 @@ abstract class SlibException extends Exception
     /**
      * Constructor
      *
-     * @param numeric $code Error code.
+     * @param numeric|int $code Error code.
      * @param array $variables To fill in placeholders for \vsprintf.
      */
-    public function __construct($code, array $variables = NULL)
+    public function __construct($code, array $variables = null)
     {
         $message = $this->getMessageByCode($code, $variables);
         parent::__construct($message, $code);

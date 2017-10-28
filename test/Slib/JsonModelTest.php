@@ -12,7 +12,7 @@ use Kshabazz\Slib\Tests\Mocks\ModelT;
  */
 class JsonModelTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var \Kshabazz\Slib\JsonModel|\PHPUnit\Framework\MockObject\MockObject */
+    /** @var \Kshabazz\Slib\JsonModel|\PHPUnit_Framework_MockObject_MockObject */
     private $model;
 
     public function setUp()
