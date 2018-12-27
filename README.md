@@ -1,10 +1,10 @@
-##About
+## About
 
 This is a library with some tools to aid in performing common task.
 
-##Examples:
+## Examples:
 
-###How to use the HttpClient object to make an HTTP Request
+### How to use the HttpClient object to make an HTTP Request
 
 ```php
 <?php
@@ -38,7 +38,7 @@ if ( $responseCode === 200 ) {
 ?>
 ```
 
-###Functions
+### Functions
 
 ```php
 <?php
