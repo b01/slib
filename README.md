@@ -1,5 +1,7 @@
 ## About
 
+[![CircleCI](https://circleci.com/gh/b01/slib.svg?style=svg)](https://circleci.com/gh/b01/slib)
+
 This is a library with some tools to aid in performing common task.
 
 ## Examples:
