@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/code/slib
     docker:
-      - image: khalifahks/alpine-php@sha256:e211554c24c84abb621a17ca10a7cfab32ffb0131504a326f7598a2eeef09ec5
+      - image: khalifahks/alpine-apps
     steps:
       - checkout
       - restore_cache:

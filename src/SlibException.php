@@ -24,7 +24,7 @@ abstract class SlibException extends Exception
     /**
      * Constructor
      *
-     * @param numeric|int $code Error code.
+     * @param mixed $code Error code.
      * @param array $variables To fill in placeholders for \vsprintf.
      */
     public function __construct($code, array $variables = null)
