@@ -4,6 +4,7 @@ use Exception;
 use Kshabazz\Slib\SqlClient;
 use PDO;
 use PDOStatement;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class SqlClientTest
@@ -13,12 +14,12 @@ use PDOStatement;
  * @backupGlobals disabled
  * @backupStaticAttributes disabled
  */
-class SqlClientTest extends \PHPUnit\Framework\TestCase
+class SqlClientTest extends TestCase
 {
     private
-        /** @var \PDO|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var \PDO|\PHPUnit\Framework\MockObject\MockObject */
         $mockPdo,
-        /** @var \PDOStatement|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var \PDOStatement|\PHPUnit\Framework\MockObject\MockObject */
         $mockStmt,
         /** @var string */
         $table;

@@ -2,13 +2,14 @@
 
 use Kshabazz\Slib\SlibException;
 use Kshabazz\Slib\Tests\Mocks\Except;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Unit test for class SlibException
  *
  * @coversDefaultClass \Kshabazz\Slib\SlibException
  */
-class SlibExceptionTest extends \PHPUnit\Framework\TestCase
+class SlibExceptionTest extends TestCase
 {
     /**
      * @covers ::__construct

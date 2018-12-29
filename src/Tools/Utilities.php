@@ -20,11 +20,9 @@ trait Utilities
         $cleanedArray = [];
 
         foreach ($data as $key => $value) {
-            if (\is_array($value)) {
-                $cleanedArray[$key] = $this->cleanArray($value);
-            } else {
-                $cleanedArray[$key] = $this->getSafeArray($key, $data);
-            }
+            $cleanedArray[$key] = \is_array($value)
+                ? $this->cleanArray($value)
+                : $this->getSafeArray($key, $data);
         }
 
         return $cleanedArray;

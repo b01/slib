@@ -5,6 +5,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Kshabazz\Slib\HttpService;
 use Kshabazz\Slib\Tests\Mocks\MockHttpService;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class HttpServiceTest
@@ -12,15 +13,15 @@ use Kshabazz\Slib\Tests\Mocks\MockHttpService;
  * @package \Kshabazz\Slib\Tests
  * @coversDefaultClass \Kshabazz\Slib\HttpService
  */
-class HttpServiceTest extends \PHPUnit\Framework\TestCase
+class HttpServiceTest extends TestCase
 {
-    /** @var \GuzzleHttp\Client|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \GuzzleHttp\Client|\PHPUnit\Framework\MockObject\MockObject */
     private $mockHttpClient;
 
     /** @var \GuzzleHttp\Psr7\Request|\PHPUnit_Framework_MockObject_MockObject */
     private $mockRequest;
 
-    /** @var \GuzzleHttp\Psr7\Response|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \GuzzleHttp\Psr7\Response|\PHPUnit\Framework\MockObject\MockObject */
     private $mockResponse;
 
     public function setUp()
