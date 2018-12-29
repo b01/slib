@@ -1,29 +1,77 @@
 version: 2
+
+base: &base
+  working_directory: ~/code
+  docker:
+    - image: khalifahks/alpine-apps@sha256:a0bce5170eeec677359050c3a76a707912757476d704d3ffd32ba8dd1202c836
+
 jobs:
-  build:
-    working_directory: ~/code/slib
-    docker:
-      - image: khalifahks/alpine-apps
+  01_build:
+    <<: *base
     steps:
       - checkout
       - restore_cache:
           key: v1-deps-{{ checksum "composer.lock" }}
       - run:
           name: 01 - Install Dependencies
-          command: |
-            composer install
+          command: 'composer install'
       - save_cache:
           key: v1-deps-{{ checksum "composer.lock" }}
           paths:
             - vendor
-      - run:
-          name: 02 - Run Static Code Analysis
-          command: './vendor/bin/phpstan analyse src'
-      - run:
-          name: 03 - Run Unit Test
-          command: './vendor/bin/phpunit'
-      - run:
-          name: 04 - Run Code Sniffer
-          command: './vendor/bin/phpcs -p --standard=PSR2 --severity=8 --colors src'
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  02_run_code_sniffer:
+    <<: *base
+    steps:
+      - attach_workspace:
+          at: .
+      - run: './vendor/bin/phpcs -p --standard=PSR2 --severity=8 --colors src'
+  03_run_static_code_analysis:
+    <<: *base
+    steps:
+      - attach_workspace:
+          at: .
+      - run: './vendor/bin/phpstan analyse src'
+  04_run_unit_tests:
+    <<: *base
+    steps:
+      - attach_workspace:
+          at: .
+      - run: './vendor/bin/phpunit'
+      - persist_to_workspace:
+          root: .
+          paths:
+            - test-results/phpunit
+  05_save_data:
+    <<: *base
+    steps:
+      - attach_workspace:
+          at: .
       - store_test_results:
           path: test-results
+      - store_artifacts:
+          path: test-results/phpunit/report
+          destination: html-report
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - 01_build
+      - 02_run_code_sniffer:
+          requires:
+            - 01_build
+      - 03_run_static_code_analysis:
+          requires:
+            - 01_build
+      - 04_run_unit_tests:
+          requires:
+            - 01_build
+      - 05_save_data:
+          requires:
+            - 02_run_code_sniffer
+            - 03_run_static_code_analysis
+            - 04_run_unit_tests
