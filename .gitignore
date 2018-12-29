@@ -2,6 +2,7 @@
 # -----------
 /.idea/
 /.phpunit/
+/test-results/
 /nbproject/
 /private/
 /vendor/
@@ -11,6 +12,5 @@
 .htaccess
 /.user.ini
 /composer.bat
-/composer.lock
 /save-test-file.txt
 /test/fixtures/ignore-*

@@ -1,0 +1,29 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/code/slib
+    docker:
+      - image: khalifahks/alpine-php@sha256:e211554c24c84abb621a17ca10a7cfab32ffb0131504a326f7598a2eeef09ec5
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-deps-{{ checksum "composer.lock" }}
+      - run:
+          name: 01 - Install Dependencies
+          command: |
+            composer install
+      - save_cache:
+          key: v1-deps-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+      - run:
+          name: 02 - Run Static Code Analysis
+          command: './vendor/bin/phpstan analyse src'
+      - run:
+          name: 03 - Run Unit Test
+          command: './vendor/bin/phpunit'
+      - run:
+          name: 04 - Run Code Sniffer
+          command: './vendor/bin/phpcs -p --standard=PSR2 --severity=8 --colors src'
+      - store_test_results:
+          path: test-results

@@ -4,9 +4,7 @@
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTestsThatDoNotTestAnything="true"
          bootstrap="test/phpunit.php"
-         colors="auto"
          forceCoversAnnotation="true"
-         mapTestClassNameToCoveredClassName="true"
          verbose="true">
     <testsuites>
         <testsuite name="All">
@@ -14,17 +12,14 @@
         </testsuite>
     </testsuites>
     <filter>
-        <blacklist>
-            <directory>.</directory>
-            <exclude>test/Slib/HttpClientTest.php</exclude>
-        </blacklist>
         <whitelist>
             <directory suffix=".php">src</directory>
         </whitelist>
     </filter>
     <logging>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="true" />
-        <log type="coverage-clover" target=".phpunit/coverage.xml" />
-        <log type="junit" target=".phpunit/junit.xml" />
+        <log type="coverage-html" target="test-results/phpunit/report" lowUpperBound="35" highLowerBound="90"/>
+        <log type="coverage-clover" target="test-results/phpunit/coverage-clover.xml" />
+        <log type="junit" target="test-results/phpunit/junit.xml" />
     </logging>
 </phpunit>
