@@ -99,7 +99,7 @@ abstract class HttpService
     {
         $this->lastResponse = null;
         $url = $this->baseUrl . $endpoint;
-        $options = ['headers' => array_merge($this->defaultHeaders, $headers)];
+        $options = ['headers' => \array_merge($this->defaultHeaders, $headers)];
 
         if (!empty($body)) {
             $options['body'] = $body;

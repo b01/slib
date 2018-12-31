@@ -114,4 +114,38 @@ class HttpServiceTest extends TestCase
 
         $this->assertEquals($this->mockRequest, $actual);
     }
+
+    /**
+     * @covers ::withHeaders
+     * @covers ::getLastResponse
+     * @uses \Kshabazz\Slib\HttpService::__construct
+     */
+    public function testCanSetHeaders()
+    {
+        $this->mockHttpClient->expects($this->once())
+            ->method('request')
+            ->with(
+                $this->equalTo('test'),
+                $this->equalTo('/testUrl'),
+                $this->equalTo([
+                    'headers' => ['Content-Type: test/1234']
+                ])
+            )
+            ->willReturn($this->mockRequest);
+
+        $this->mockHttpClient->expects($this->once())
+            ->method('send')
+            ->with($this->mockRequest)
+            ->willReturnSelf();
+
+        $service = new MockHttpService($this->mockHttpClient, '', '', '');
+
+        $service->withHeaders(['Content-Type: test/1234']);
+
+        $service->doSend('test', '/testUrl', [], '');
+
+        $actual = $service->getLastResponse();
+
+        $this->assertEquals($this->mockHttpClient, $actual);
+    }
 }

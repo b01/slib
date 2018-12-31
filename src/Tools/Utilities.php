@@ -5,7 +5,9 @@
  */
 
 /**
- * Description of Functions
+ * Trait Utilities
+ *
+ * @package \Kshabazz\Slib\Tools
  */
 trait Utilities
 {
@@ -151,24 +153,24 @@ trait Utilities
      */
     function formatDebugTrace(array $backtrace)
     {
-        $trace = '';
+        $rV = '';
 
         foreach ($backtrace as $trace) {
             $functionName = $traceStr = $trace['function'];
-            $args = \json_encode($trace['args']);
+            $args = \join(', ', $trace['args']);
             $className = empty($trace['class'])
                 ? ''
-                : $traceStr = $trace['class'] . '::' . $traceStr;
+                : $traceStr = $trace['class'] . '::';
             $parameters = \count($trace['args']) > 0
-                ? '( ' . substr($args, 1, -1) . ' )'
+                ? '( ' . $args . ' )'
                 : '()';
 
-            $trace .= "\n" . $className . $functionName . $parameters;
+            $rV .= "\n" . $className . $functionName . $parameters;
         }
 
-        $trace .= "\n";
+        $rV .= "\n";
 
-        return $trace;
+        return $rV;
     }
 
     /**
@@ -178,20 +180,23 @@ trait Utilities
      * @param int $pQuantity Number of elements to retrieve from the array.
      * @return array
      */
-    function randomElementsFromArray($pSource, $pQuantity = 1)
+    function randomElementsFromArray(array $pSource, int $pQuantity = 1) : array
     {
-        $returnAry = null;
+        \shuffle($pSource);
 
-        if ($this->isArray($pSource)) {
-            shuffle($pSource);
-            $slices = array_slice($pSource, 0, $pQuantity);
+        return \array_slice($pSource, 0, $pQuantity);
+    }
 
-            if ($this->isArray($slices)) {
-                $returnAry = $slices[0];
-            }
-        }
-
-        return $returnAry;
+    /**
+     * Random x element from an array.
+     *
+     * @param array $pSource Source, array which to pull elements from.
+     * @param int $pQuantity Number of elements to retrieve from the array.
+     * @return mixed
+     */
+    function randomElementFromArray(array $pSource, int $pQuantity = 1) : int
+    {
+        return $this->randomElementsFromArray($pSource, $pQuantity)[0];
     }
 
     /**
@@ -206,9 +211,11 @@ trait Utilities
     {
         $directory = \dirname($pFileName);
 
-        if (!is_dir($directory)) {
-            $madeDir = \mkdir($directory, 0755, TRUE);
-            if ($madeDir === FALSE) {
+        if (!\is_dir($directory)) {
+            try {
+                $madeDir = \mkdir($directory, 0755, TRUE);
+
+            } catch (\Exception $err) {
                 throw new \Exception("mkdir: Unable make directory '{$directory}'.");
             }
         }

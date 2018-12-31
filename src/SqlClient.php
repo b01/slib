@@ -38,16 +38,6 @@ class SqlClient
     }
 
     /**
-     * Destructor
-     */
-    public function __destruct()
-    {
-        // Close the DB connection.
-        $this->pdo = null;
-        unset($this->ipAddress);
-    }
-
-    /**
      * Get currently set user IP address.
      *
      * @return string IP address or null.
@@ -127,7 +117,11 @@ class SqlClient
             // Run the query
             $returnValue = $this->pdoQuery($stmt, $pReturnResults);
         } catch (Exception $pError) {
-            throw new Exception('A PDO Error has occurred.' . $pError->getMessage(), 500, $pError);
+            throw new Exception(
+                'A PDO Error has occurred.' . $pError->getMessage(),
+                500,
+                $pError
+            );
         }
 
         return $returnValue;
@@ -170,4 +164,3 @@ class SqlClient
         return $returnValue;
     }
 }
-?>

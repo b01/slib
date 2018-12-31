@@ -39,12 +39,7 @@ class StringStream implements StreamInterface
      */
     public function __toString()
     {
-        $contents = '';
-
-        try {
-            $contents = $this->getContents();
-        } catch (RuntimeException $exception) {
-        }
+        $contents = $this->getContents();
 
         return $contents;
     }
@@ -84,12 +79,7 @@ class StringStream implements StreamInterface
      */
     public function tell()
     {
-
         $position = \ftell($this->output);
-
-        if (!\is_integer($position)) {
-            throw new RuntimeException('Unable to get the cursors\' current position.', self::ERROR_TELL);
-        }
 
         return $position;
     }

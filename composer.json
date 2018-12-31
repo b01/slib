@@ -32,7 +32,8 @@
 	},
 	"scripts": {
 		"units": "phpunit",
-		"pcs": "./vendor/bin/phpcs -p --standard=PSR2 --severity=8 --colors src"
+		"pcs": "./vendor/bin/phpcs -p --standard=PSR2 --severity=8 --colors src",
+		"sami": "sami.phar update ./sami-config.php"
 	},
 	"suggest": {
 		"ext-pdo": "*"

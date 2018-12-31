@@ -41,6 +41,8 @@ jobs:
       - attach_workspace:
           at: .
       - run: './vendor/bin/phpunit'
+      - store_test_results:
+          path: test-results
       - persist_to_workspace:
           root: .
           paths:
@@ -50,8 +52,6 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - store_test_results:
-          path: test-results
       - store_artifacts:
           path: test-results/phpunit/report
           destination: html-report
