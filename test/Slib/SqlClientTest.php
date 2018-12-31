@@ -41,9 +41,9 @@ class SqlClientTest extends TestCase
     }
 
     /**
+     * @covers ::__construct
      * @covers ::ipAddress
      * @uses \Kshabazz\Slib\SqlClient::__construct
-     * @uses \Kshabazz\Slib\SqlClient::__destruct
      */
     public function test_retrieving_ip_address()
     {
@@ -55,7 +55,6 @@ class SqlClientTest extends TestCase
     /**
      * @covers ::pdoQuery
      * @uses \Kshabazz\Slib\SqlClient::__construct
-     * @uses \Kshabazz\Slib\SqlClient::__destruct
      */
     public function test_can_run_statement_success_no_results()
     {
@@ -77,7 +76,6 @@ class SqlClientTest extends TestCase
     /**
      * @covers ::pdoQuery
      * @uses \Kshabazz\Slib\SqlClient::__construct
-     * @uses \Kshabazz\Slib\SqlClient::__destruct
      * @uses \Kshabazz\Slib\Tools\Utilities::isArray
      */
     public function test_can_run_statement_success_with_results()
@@ -100,6 +98,7 @@ class SqlClientTest extends TestCase
     /**
      * Test the catch block of pdoQuery.
      *
+     * @covers ::pdoQuery
      * @expectedException \Exception
      * @expectedExceptionMessage A PDO Error has occurred
      */
@@ -146,7 +145,6 @@ class SqlClientTest extends TestCase
     /**
      * @covers ::select
      * @uses \Kshabazz\Slib\SqlClient::__construct
-     * @uses \Kshabazz\Slib\SqlClient::__destruct
      * @expectedException \Exception
      * @expectedExceptionMessage Select statement failed
      */
@@ -169,7 +167,6 @@ class SqlClientTest extends TestCase
     /**
      * @covers ::pdoQueryBind
      * @uses \Kshabazz\Slib\SqlClient::__construct
-     * @uses \Kshabazz\Slib\SqlClient::__destruct
      * @uses \Kshabazz\Slib\SqlClient::pdoQuery
      * @uses \Kshabazz\Slib\Tools\Utilities::isArray
      */
@@ -211,6 +208,7 @@ class SqlClientTest extends TestCase
     /**
      * Test pdoQueryBind method.
      *
+     * @covers ::pdoQueryBind
      * @expectedException \Exception
      * @expectedExceptionMessage A PDO Error has occurred
      */
@@ -226,5 +224,3 @@ class SqlClientTest extends TestCase
         $sql->pdoQueryBind('test');
     }
 }
-
-?>
